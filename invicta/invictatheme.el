@@ -7,11 +7,9 @@
  '(inhibit-startup-screen t))
 
 ;; Loads themes from DOOM emacs
-;(require 'doom-themes)
 (load-theme 'doom-vibrant t)
-
-;; powerline modebar
-;(spaceline-emacs-theme)
+;; Doom modeline
+(doom-modeline-mode 1)
 
 ;; Disable annoying graphical modes
 (blink-cursor-mode 0)

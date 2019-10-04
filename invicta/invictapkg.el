@@ -14,10 +14,19 @@
   (require 'use-package))
 
 (use-package magit :ensure t)
-(use-package ivy :ensure t)
+(use-package diminish :ensure t)
+(use-package ivy :ensure t :diminish ivy-mode)
+(use-package company :ensure t :diminish company-mode)
+(use-package all-the-icons :ensure t)
 (use-package doom-themes :ensure t)
-(use-package company :ensure t)
+(use-package doom-modeline :ensure t)
 (use-package projectile :ensure t)
+(use-package dashboard :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-set-footer nil)
+  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-banner-logo-title "Welcome to GNU Emacs"))
 
 
 (provide 'invictapkg)
