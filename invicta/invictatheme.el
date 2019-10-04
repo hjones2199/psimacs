@@ -13,11 +13,6 @@
 ;; powerline modebar
 ;(spaceline-emacs-theme)
 
-;; Custom menu bar theme for tty
-(custom-set-faces
- '(menu ((t (:foreground "brightblack" :inverse-video t))))
- '(tty-menu-selected-face ((t (:background "color-208")))))
-
 ;; Disable annoying graphical modes
 (blink-cursor-mode 0)
 (scroll-bar-mode 0)
