@@ -12,8 +12,8 @@
 ;;;;; Global Modes ;;;;;;
 (add-hook 'after-init-hook 'electric-pair-mode)
 (add-hook 'after-init-hook 'show-paren-mode)
-(add-hook 'after-init-hook 'global-company-mode)
-(add-hook 'after-init-hook 'ivy-mode)
+;(add-hook 'after-init-hook 'global-company-mode)
+;(add-hook 'after-init-hook 'ivy-mode)
 
 ;;;;; Programming Mode ;;;;;
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)

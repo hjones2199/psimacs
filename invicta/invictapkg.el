@@ -17,14 +17,14 @@
   (package-install 'use-package)
   (require 'use-package))
 
-(use-package magit :ensure t)
-(use-package diminish :ensure t)
-(use-package ivy :ensure t :diminish ivy-mode)
-(use-package company :ensure t :diminish company-mode)
+;;;;; Global packages for nearly any task ;;;;;
+
+;; Visual/Theme packages
 (use-package all-the-icons :ensure t)
-(use-package doom-themes :ensure t)
-(use-package doom-modeline :ensure t)
-(use-package projectile :ensure t)
+(use-package doom-themes :ensure t
+  :config (load-theme 'doom-vibrant t))
+(use-package doom-modeline :ensure t
+  :hook (after-init . doom-modeline-mode))
 (use-package dashboard :ensure t
   :config
   (dashboard-setup-startup-hook)
@@ -38,5 +38,32 @@
   :bind
   ("C-<tab>" . centaur-tabs-forward)
   ("C-c <tab>" . centaur-tabs-mode))
+
+;; Behavior packages
+(use-package ivy :ensure t :diminish
+  :config (ivy-mode t))
+(use-package company :ensure t :diminish
+  :defer 2
+  :custom
+  (company-minimum-prefix-length 2)
+  (company-tooltip-align-annotations 't)
+  (global-company-mode t))
+(use-package company-box :ensure t
+  :after company
+  :diminish
+  :hook (company-mode . company-box-mode))
+
+;; Projects and global tools
+(use-package magit :ensure t)
+(use-package projectile :ensure t)
+
+;;;;; Development packages that load on demand ;;;;;
+
+;;Python
+(use-package anaconda-mode :ensure t
+  :hook python-mode)
+(use-package company-anaconda :ensure t
+  :after (anaconda-mode company)
+  :config (add-to-list 'company-backends 'company-anaconda))
 
 (provide 'invictapkg)

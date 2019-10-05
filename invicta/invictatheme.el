@@ -10,11 +10,6 @@
 (custom-set-variables
  '(inhibit-startup-screen t))
 
-;; Loads themes from DOOM emacs
-(load-theme 'doom-vibrant t)
-;; Doom modeline
-(doom-modeline-mode 1)
-
 ;; Disable annoying graphical modes
 (blink-cursor-mode 0)
 (tool-bar-mode 0)
