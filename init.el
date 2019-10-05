@@ -2,6 +2,7 @@
 ;;; Init file that calls the actual
 ;;; configuration/theming from the
 ;;; invicta directory.
+;;; This file is not a part of GNU Emacs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Adds invicta config to the loadpath
