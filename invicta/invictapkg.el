@@ -27,6 +27,12 @@
   (setq dashboard-set-footer nil)
   (setq dashboard-startup-banner 'logo)
   (setq dashboard-banner-logo-title "Welcome to GNU Emacs"))
-
+(use-package centaur-tabs :ensure t
+  :config
+    (centaur-tabs-headline-match)
+  (setq centaur-tabs-set-icons t)
+  :bind
+  ("C-<tab>" . centaur-tabs-forward)
+  ("C-c <tab>" . centaur-tabs-mode))
 
 (provide 'invictapkg)

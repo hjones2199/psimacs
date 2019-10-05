@@ -1,6 +1,8 @@
+
 recentf
 elpa
 *.elc
 *~
 transient
 auto-save-list
+projectile-bookmarks.eld
