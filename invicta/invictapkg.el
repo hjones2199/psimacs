@@ -69,4 +69,13 @@
   :after (anaconda-mode company)
   :config (add-to-list 'company-backends 'company-anaconda))
 
+;; General code completion & debugging
+(use-package yasnippet :ensure t)
+(use-package lsp-mode :ensure t
+  :hook (prog-mode . lsp)
+  :commands lsp
+  :config (setq lsp-clients-clangd-executable "/usr/bin/clangd-7"))
+(use-package company-lsp :ensure t
+  :commands company-lsp)
+
 (provide 'invictapkg)
