@@ -6,6 +6,8 @@
 ;;;;; Package Management ;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
 (package-initialize)
 (require 'package)
 (add-to-list 'package-archives
@@ -42,6 +44,7 @@
 ;; Behavior packages
 (use-package ivy :ensure t :diminish
   :config (ivy-mode t))
+
 (use-package company :ensure t :diminish
   :defer 2
   :custom
