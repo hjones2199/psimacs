@@ -9,3 +9,6 @@ projectile-bookmarks.eld
 anaconda-mode
 .cache
 .lsp*
+.dap-breakpoints
+.extension
+games

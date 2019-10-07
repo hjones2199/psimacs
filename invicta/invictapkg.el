@@ -6,6 +6,7 @@
 ;;;;; Package Management ;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Fixes ELPA handshake bug in Emacs 26
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 (package-initialize)
@@ -44,7 +45,6 @@
 ;; Behavior packages
 (use-package ivy :ensure t :diminish
   :config (ivy-mode t))
-
 (use-package company :ensure t :diminish
   :defer 2
   :custom
@@ -62,14 +62,17 @@
 
 ;;;;; Development packages that load on demand ;;;;;
 
-;;Python
+;; Python
 (use-package anaconda-mode :ensure t
   :hook python-mode)
 (use-package company-anaconda :ensure t
   :after (anaconda-mode company)
   :config (add-to-list 'company-backends 'company-anaconda))
 
-;; General code completion & debugging
+;; Go
+(use-package go-mode :ensure t)
+
+;; General code completion engines
 (use-package yasnippet :ensure t)
 (use-package lsp-mode :ensure t
   :hook (prog-mode . lsp)
@@ -77,5 +80,11 @@
   :config (setq lsp-clients-clangd-executable "/usr/bin/clangd-7"))
 (use-package company-lsp :ensure t
   :commands company-lsp)
+
+;; General debug engines
+(use-package dap-mode :ensure t
+  :config (dap-mode 1) (dap-ui-mode 1)
+  (dap-tooltip-mode 1) (tooltip-mode 1)
+  (require 'dap-go) (require 'dap-gdb-lldb))
 
 (provide 'invictapkg)
