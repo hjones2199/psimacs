@@ -41,6 +41,13 @@
   :bind
   ("C-<tab>" . centaur-tabs-forward)
   ("C-c <tab>" . centaur-tabs-mode))
+(use-package treemacs :ensure t
+  :defer t
+  :config (treemacs-git-mode 'deferred))
+(use-package treemacs-magit :ensure t
+  :after treemacs magit)
+(use-package treemacs-projectile :ensure t
+  :after treemacs projectile)
 
 ;; Behavior packages
 (use-package ivy :ensure t :diminish
@@ -75,7 +82,7 @@
 ;; General code completion engines
 (use-package yasnippet :ensure t)
 (use-package lsp-mode :ensure t
-  :hook (prog-mode . lsp)
+  :hook (go-mode . lsp) (c-mode . lsp) (c++-mode . lsp)
   :commands lsp
   :config (setq lsp-clients-clangd-executable "/usr/bin/clangd-7"))
 (use-package company-lsp :ensure t
@@ -83,8 +90,11 @@
 
 ;; General debug engines
 (use-package dap-mode :ensure t
-  :config (dap-mode 1) (dap-ui-mode 1)
-  (dap-tooltip-mode 1) (tooltip-mode 1)
-  (require 'dap-go) (require 'dap-gdb-lldb))
+  :config (tooltip-mode 1) (dap-mode 1)
+  (dap-ui-mode 1) (dap-tooltip-mode 1)
+  (require 'dap-go) (require 'dap-gdb-lldb)
+  :bind ("<f5>" . dap-debug)
+  ("C-c b" . dap-breakpoint-toggle)
+  ("C-c n" . dap-continue))
 
 (provide 'invictapkg)
