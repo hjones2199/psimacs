@@ -31,9 +31,16 @@
 (use-package dashboard :ensure t
   :config
   (dashboard-setup-startup-hook)
+  (setq dashboard-banner-logo-title "Welcome to GNU Emacs")
   (setq dashboard-set-footer nil)
   (setq dashboard-startup-banner 'logo)
-  (setq dashboard-banner-logo-title "Welcome to GNU Emacs"))
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-center-content t)
+  (setq dashboard-items '((projects . 5)
+                        (recents  . 5)
+                        (bookmarks . 5)
+                        (agenda . 5))))
 (use-package centaur-tabs :ensure t
   :config
     (centaur-tabs-headline-match)
@@ -43,7 +50,8 @@
   ("C-c <tab>" . centaur-tabs-mode))
 (use-package treemacs :ensure t
   :defer t
-  :config (treemacs-git-mode 'deferred))
+  :config (treemacs-git-mode 'deferred)
+  (progn (setq treemacs-width 30)))
 (use-package treemacs-magit :ensure t
   :after treemacs magit)
 (use-package treemacs-projectile :ensure t
@@ -78,6 +86,8 @@
 
 ;; Go
 (use-package go-mode :ensure t)
+(use-package go-snippets :ensure t
+  :after yasnippet)
 
 ;; General code completion engines
 (use-package yasnippet :ensure t)

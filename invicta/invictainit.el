@@ -9,5 +9,6 @@
 (require 'invictapkg)
 (require 'invictatheme)
 (require 'invictabehavior)
+(require 'invictamodes)
 
 (provide 'invictainit)
