@@ -80,9 +80,7 @@
 ;; Python
 (use-package anaconda-mode :ensure t
   :hook python-mode)
-(use-package company-anaconda :ensure t
-  :after (anaconda-mode company)
-  :config (add-to-list 'company-backends 'company-anaconda))
+(use-package pyvenv :ensure t)
 
 ;; Go
 (use-package go-mode :ensure t)
@@ -102,7 +100,7 @@
 (use-package dap-mode :ensure t
   :config (tooltip-mode 1) (dap-mode 1)
   (dap-ui-mode 1) (dap-tooltip-mode 1)
-  (require 'dap-go) (require 'dap-gdb-lldb)
+  (require 'dap-go) (require 'dap-gdb-lldb) (require 'dap-python)
   :bind ("<f5>" . dap-debug)
   ("C-c b" . dap-breakpoint-toggle)
   ("C-c n" . dap-continue))
