@@ -60,6 +60,10 @@
 ;; Behavior packages
 (use-package ivy :ensure t :diminish
   :config (ivy-mode t))
+(use-package counsel :ensure t :diminish
+  :config (counsel-mode t))
+(use-package swiper :ensure t :diminish
+  :bind ("C-s" . swiper-isearch))
 (use-package company :ensure t :diminish
   :defer 2
   :custom

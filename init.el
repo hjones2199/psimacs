@@ -15,6 +15,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(menu ((t (:foreground "brightblack" :inverse-video t))))
+ '(swiper-line-face ((t (:background "dim gray" :foreground "#1c1f24"))))
  '(tty-menu-selected-face ((t (:background "color-208")))))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
