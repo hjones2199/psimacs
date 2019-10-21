@@ -74,6 +74,10 @@
   :after company
   :diminish
   :hook (company-mode . company-box-mode))
+(use-package god-mode :ensure t
+  :bind ("<escape>" . god-mode-all)
+  :config (setq god-exempt-major-modes nil)
+  (setq god-exempt-predicates nil))
 
 ;; Projects and global tools
 (use-package magit :ensure t)

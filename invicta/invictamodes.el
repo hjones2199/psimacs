@@ -14,4 +14,13 @@
   (interactive)
   (dap-ui-mode) (dap-ui-locals) (treemacs))
 
+;;;;; Oz integration from within emacs itself ;;;;;
+(defun mozart-run ()
+  "Turns on the Oz programming engine"
+  (interactive)
+  (setenv "OZHOME" "/usr")
+  (push "/usr/share/mozart/elisp/" load-path)
+  (require 'oz))
+
+
 (provide 'invictamodes)
