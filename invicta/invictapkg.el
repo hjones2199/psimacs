@@ -56,6 +56,8 @@
   :after treemacs magit)
 (use-package treemacs-projectile :ensure t
   :after treemacs projectile)
+(use-package bar-cursor :ensure t
+  :config (bar-cursor-mode t))
 
 ;; Behavior packages
 (use-package ivy :ensure t :diminish
