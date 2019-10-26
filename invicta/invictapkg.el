@@ -37,7 +37,9 @@
 (use-package doom-themes :ensure t
   :config (load-theme 'doom-vibrant t))
 (use-package doom-modeline :ensure t
-  :hook (after-init . doom-modeline-mode))
+  :hook (after-init . doom-modeline-mode)
+  :config (setq doom-modeline-icon (display-graphic-p))
+  (setq find-file-visit-truename t))
 (use-package dashboard :ensure t
   :config
   (dashboard-setup-startup-hook)
