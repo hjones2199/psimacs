@@ -1,13 +1,19 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; This file is not a part of GNU Emacs;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; This file is not a part of GNU Emacs ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;; Behavior Customization ;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Directory for file backups
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+;(setq backup-directory-alist
+;      '(("." . (expand-file-name (locate-user-emacs-file "backups")))))
+
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
 
 ;;;;; Global Modes ;;;;;;
 (add-hook 'after-init-hook 'electric-pair-mode)

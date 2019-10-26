@@ -6,7 +6,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Adds invicta config to the loadpath
-(push "~/.emacs.d/invicta" load-path)
+(push (expand-file-name (locate-user-emacs-file "invicta")) load-path)
 (require 'invictainit)
 
 (custom-set-faces

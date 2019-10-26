@@ -1,6 +1,6 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; This file is not a part of GNU Emacs;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; This file is not a part of GNU Emacs ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;; Theme Customization ;;;;;
@@ -10,10 +10,14 @@
 (custom-set-variables
  '(inhibit-startup-screen t))
 
+
 ;; Disable annoying graphical modes
 (blink-cursor-mode 0)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
+
+;; Show battery information
+;(display-battery-mode 1)
 
 (if (display-graphic-p)
     (scroll-bar-mode 0))

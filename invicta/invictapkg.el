@@ -1,6 +1,6 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; This file is not a part of GNU Emacs;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; This file is not a part of GNU Emacs ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;; Package Management ;;;;;
@@ -20,6 +20,16 @@
   (package-install 'use-package)
   (require 'use-package))
 
+;; Keeps packages up to date, prompts user to update weekly
+(use-package auto-package-update :ensure t
+  :config
+  (setq auto-package-update-delete-old-versions t)
+  (setq auto-package-update-prompt-before-update t)
+  (setq auto-package-update-last-update-day-path
+        (expand-file-name
+         (locate-user-emacs-file ".cache/last-package-update-day")))
+  (auto-package-update-maybe))
+
 ;;;;; Global packages for nearly any task ;;;;;
 
 ;; Visual/Theme packages
@@ -32,6 +42,8 @@
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-banner-logo-title "Welcome to GNU Emacs")
+  (setq recentf-save-file
+        (expand-file-name (locate-user-emacs-file ".cache/recentf")))
   (setq dashboard-set-footer nil)
   (setq dashboard-startup-banner 'logo)
   (setq dashboard-set-heading-icons t)
@@ -82,8 +94,22 @@
   (setq god-exempt-predicates nil))
 
 ;; Projects and global tools
-(use-package magit :ensure t)
-(use-package projectile :ensure t)
+(use-package magit :ensure t
+  :config
+  (setq transient-values-file
+        (expand-file-name
+         (locate-user-emacs-file ".cache/projectile-cache")))
+  (setq transient-history-file
+        (expand-file-name
+         (locate-user-emacs-file ".cache/projectile-cache"))))
+(use-package projectile :ensure t
+  :config
+  (setq projectile-cache-file
+        (expand-file-name
+         (locate-user-emacs-file ".cache/projectile-cache")))
+  (setq projectile-known-projects-file
+        (expand-file-name
+         (locate-user-emacs-file ".cache/projectile-bookmarks.eld"))))
 
 ;;;;; Development packages that load on demand ;;;;;
 
@@ -102,7 +128,9 @@
 (use-package lsp-mode :ensure t
   :hook (go-mode . lsp) (c-mode . lsp) (c++-mode . lsp)
   :commands lsp
-  :config (setq lsp-clients-clangd-executable "/usr/bin/clangd-7"))
+  :config (setq lsp-clients-clangd-executable "/usr/bin/clangd-7")
+  (setq lsp-session-file (expand-file-name
+                          (locate-user-emacs-file ".cache/lsp-session"))))
 (use-package company-lsp :ensure t
   :commands company-lsp)
 
@@ -111,6 +139,8 @@
   :config (tooltip-mode 1) (dap-mode 1)
   (dap-ui-mode 1) (dap-tooltip-mode 1)
   (require 'dap-go) (require 'dap-gdb-lldb) (require 'dap-python)
+  (setq dap-breakpoints-file
+        (expand-file-name (locate-user-emacs-file ".cache/dap-breakpoints")))
   :bind ("<f5>" . dap-debug)
   ("C-c b" . dap-breakpoint-toggle)
   ("C-c n" . dap-continue))
