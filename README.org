@@ -1,0 +1,21 @@
+#+TITLE: Emacs-Invicta README
+
+[[https://www.gnu.org/software/emacs/][file:https://img.shields.io/badge/Made%20For-Emacs%2026+-8732d7#.png]]
+
+* Installation
+To try out Emacs-Invicta, first move your current .emacs.d to a different location:
+#+begin_src sh
+mv .emacs.d .emacs.d.old
+#+end_src
+Then clone the repo to *.emacs.d* in your home directory:
+#+begin_src sh
+git clone https://github.com/hjones2199/emacs-invicta.git ~/.emacs.d/
+#+end_src
+Emacs will install and configure Invicta's melpa dependencies on first run. The packages
+can be reconfigured or disabled in *~/.emacs.d/invicta/invictapkg.el.* See LSP and
+dap-mode's github READMEs for tips on configuring their language specific debugging
+features.
+
+* License
+Emacs Invicta is Licensed under the three clause BSD license, see the /LICENSE/ file
+for details.
