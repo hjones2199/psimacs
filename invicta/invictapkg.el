@@ -72,6 +72,16 @@
   :after treemacs projectile)
 (use-package bar-cursor :ensure t
   :config (bar-cursor-mode t))
+(use-package eshell-toggle :ensure t :defer t
+  :custom
+  (eshell-toggle-size-fraction 3)
+  (eshell-toggle-use-projectile-root t)
+  (eshell-toggle-run-command nil)
+  ;(eshell-toggle-init-function #'eshell-toggle-init-ansi-term)
+  (eshell-toggle-init-function #'eshell-toggle-init-eshell)
+  :bind
+  ("<f12>" . eshell-toggle))
+
 
 ;; Behavior packages
 (use-package ivy :ensure t :diminish
@@ -79,7 +89,7 @@
 (use-package counsel :ensure t :diminish
   :config (counsel-mode t))
 (use-package swiper :ensure t :diminish
-  :bind ("C-s" . swiper-isearch))
+  :bind ("C-s" . swiper-isearch) ("C-r" . swiper-isearch-backward))
 (use-package company :ensure t :diminish
   :defer 2
   :custom
