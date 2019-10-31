@@ -1,9 +1,12 @@
+*.elc
+*~
 snippets
 recentf
 elpa
-*.elc
-*~
+eshell
+tramp
 transient
+org
 auto-save-list
 projectile-bookmarks.eld
 anaconda-mode
@@ -12,4 +15,3 @@ anaconda-mode
 .dap-breakpoints
 .extension
 games
-eshell

@@ -30,6 +30,9 @@
          (locate-user-emacs-file ".cache/last-package-update-day")))
   (auto-package-update-maybe))
 
+;; Custom eshell config
+(use-package psishell)
+
 ;;;;; Global packages for nearly any task ;;;;;
 
 ;; Visual/Theme packages
@@ -77,7 +80,6 @@
   (eshell-toggle-size-fraction 3)
   (eshell-toggle-use-projectile-root t)
   (eshell-toggle-run-command nil)
-  ;(eshell-toggle-init-function #'eshell-toggle-init-ansi-term)
   (eshell-toggle-init-function #'eshell-toggle-init-eshell)
   :bind
   ("<f12>" . eshell-toggle))
@@ -104,6 +106,11 @@
   :bind ("<escape>" . god-mode-all)
   :config (setq god-exempt-major-modes nil)
   (setq god-exempt-predicates nil))
+(use-package tramp
+  :config  (setq tramp-default-method "ssh")
+  (setq tramp-persistency-file-name
+        (expand-file-name
+         (locate-user-emacs-file ".cache/tramp"))))
 
 ;; Projects and global tools
 (use-package magit :ensure t

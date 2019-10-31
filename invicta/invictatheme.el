@@ -10,14 +10,6 @@
 (custom-set-variables
  '(inhibit-startup-screen t))
 
-;; Custom Eshell theme
-(setq eshell-prompt-regexp "^[^#$λ\n]*[#$λ] " eshell-prompt-function
-      (lambda nil
-        (concat
-         (propertize (eshell/pwd) 'face `(:foreground "#51afef"))
-         (propertize " λ" 'face `(:foreground "#c065db"))
-         (propertize " " 'face `(:foreground "white")))))
-
 ;; Disable annoying graphical modes
 (blink-cursor-mode 0)
 (tool-bar-mode 0)
