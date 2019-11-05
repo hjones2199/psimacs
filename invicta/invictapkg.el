@@ -142,6 +142,13 @@
 (use-package go-snippets :ensure t
   :after yasnippet)
 
+;; Common Lisp
+(use-package slime :ensure t :defer
+  :config
+  (setq inferior-lisp-program "/usr/bin/sbcl")
+  (add-to-list 'slime-contribs 'slime-fancy))
+(use-package slime-company :ensure t :after slime company)
+
 ;; General code completion engines
 (use-package yasnippet :ensure t)
 (use-package lsp-mode :ensure t
@@ -152,6 +159,10 @@
                           (locate-user-emacs-file ".cache/lsp-session"))))
 (use-package company-lsp :ensure t
   :commands company-lsp)
+(use-package origami :ensure t
+  :config (global-origami-mode)
+  :bind ("C-c f" . origami-forward-toggle-node))
+(use-package lsp-origami :ensure t)
 
 ;; General debug engines
 (use-package dap-mode :ensure t

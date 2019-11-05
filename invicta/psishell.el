@@ -40,6 +40,10 @@
           (find-file-noselect arg2)
         (find-file-other-window arg1)))))
 
+(defun eshell/reshell ()
+  "Replace buffer with a fresh eshell buffer"
+  (kill-buffer "*eshell*")
+  (eshell))
 
 (define-minor-mode psishell-mode
   "Activates psishell"
