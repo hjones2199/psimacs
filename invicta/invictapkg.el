@@ -11,8 +11,18 @@
 
 (package-initialize)
 (require 'package)
-(add-to-list 'package-archives
-	     '("melpa" . "http://melpa.org/packages/"))
+
+;(add-to-list 'package-archives
+;	     '("melpa" . "http://melpa.org/packages/"))
+
+(setq package-archives
+      '(("elpa"     . "http://elpa.gnu.org/packages/")
+        ("melpa-stable" . "http://stable.melpa.org/packages/")
+        ("melpa"        . "http://melpa.org/packages/"))
+      package-archive-priorities
+      '(("melpa-stable" . 5)
+        ("elpa"     . 0)
+        ("melpa"        . 10)))
 
 (unless (require 'use-package nil 'noerror)
   (package-refresh-contents)
@@ -152,11 +162,13 @@
 ;; General code completion engines
 (use-package yasnippet :ensure t)
 (use-package lsp-mode :ensure t
-  :hook (go-mode . lsp) (c-mode . lsp) (c++-mode . lsp)
+  :pin melpa-stable
+  :hook (go-mode . lsp) (c-mode . lsp) (c++-mode . lsp) (java-mode . lsp)
   :commands lsp
   :config (setq lsp-clients-clangd-executable "/usr/bin/clangd-7")
   (setq lsp-session-file (expand-file-name
                           (locate-user-emacs-file ".cache/lsp-session"))))
+(use-package lsp-java :ensure t :pin melpa-stable)
 (use-package company-lsp :ensure t
   :commands company-lsp)
 (use-package origami :ensure t
