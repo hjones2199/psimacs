@@ -12,17 +12,16 @@
 (package-initialize)
 (require 'package)
 
-;(add-to-list 'package-archives
-;	     '("melpa" . "http://melpa.org/packages/"))
-
 (setq package-archives
-      '(("elpa"     . "http://elpa.gnu.org/packages/")
+      '(("elpa" . "http://elpa.gnu.org/packages/")
         ("melpa-stable" . "http://stable.melpa.org/packages/")
-        ("melpa"        . "http://melpa.org/packages/"))
+        ("melpa" . "http://melpa.org/packages/")
+        ("org" . "http://orgmode.org/elpa/"))
       package-archive-priorities
       '(("melpa-stable" . 5)
         ("elpa"     . 0)
-        ("melpa"        . 10)))
+        ("melpa"        . 10)
+        ("org" . 8)))
 
 (unless (require 'use-package nil 'noerror)
   (package-refresh-contents)
@@ -48,7 +47,8 @@
 ;; Visual/Theme packages
 (use-package all-the-icons :ensure t)
 (use-package doom-themes :ensure t
-  :config (load-theme 'doom-vibrant t))
+  :config (load-theme 'doom-vibrant t)
+  (doom-themes-org-config))
 (use-package doom-modeline :ensure t
   :hook (after-init . doom-modeline-mode)
   :config (setq doom-modeline-icon (display-graphic-p))
@@ -121,6 +121,10 @@
   (setq tramp-persistency-file-name
         (expand-file-name
          (locate-user-emacs-file ".cache/tramp"))))
+
+;; Org-Mode
+(use-package org :ensure org-plus-contrib
+  :config (setq org-hide-emphasis-markers t))
 
 ;; Projects and global tools
 (use-package magit :ensure t

@@ -1,0 +1,32 @@
+#+TITLE: Psimacs Configuration
+#+AUTHOR: hjones2199
+
+
+* Packages
+
+  Configures and installs external packages. Packages are updated weekly
+but this can be configured. Currently defaulting to MELPA, but older packages
+from melpa-stable can be installed by pinning with use-package.
+
+** Package Manager
+
+** Org Mode
+
+Custom theme elements for org mode.
+#+begin_src emacs-lisp
+(use-package org-bullets :ensure t
+  :hook (org-mode . org-bullets-mode))
+(set-face-attribute 'org-level-1 nil :height 1.4)
+(set-face-attribute 'org-level-2 nil :height 1.25)
+(set-face-attribute 'org-document-title nil :height 1.5)
+#+end_src
+
+Org Babel language configuration.
+#+begin_src emacs-lisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((python . t)
+     (shell . t)
+     (C . t)
+     (makefile . t)))
+#+end_src

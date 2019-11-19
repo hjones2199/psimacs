@@ -20,7 +20,10 @@
   (interactive)
   (setenv "OZHOME" "/usr")
   (push "/usr/share/mozart/elisp/" load-path)
-  (require 'oz))
+  (require 'oz)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((oz . t))))
 
 
 (provide 'invictamodes)

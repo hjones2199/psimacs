@@ -8,6 +8,7 @@
 ;; Adds invicta config to the loadpath
 (push (expand-file-name (locate-user-emacs-file "invicta")) load-path)
 (require 'invictainit)
+(org-babel-load-file (locate-user-emacs-file "psimacs.org"))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
