@@ -1,32 +1,383 @@
 #+TITLE: Psimacs Configuration
 #+AUTHOR: hjones2199
-
+#+STARTUP: indent
 
 * Packages
 
-  Configures and installs external packages. Packages are updated weekly
-but this can be configured. Currently defaulting to MELPA, but older packages
-from melpa-stable can be installed by pinning with use-package.
+Installs external packages, and configures both baseline and external packages.
+Packages are updated weekly but this can be configured. Currently defaulting to
+MELPA, but older packages from melpa-stable can be installed by pinning with
+use-package. The various packages are grouped by their purpose.
 
-** Package Manager
+** Package Management
+
+The basic package manager setup is done in the init.el file to ensure that
+it loads before org-mode. This is necessary so that Org Mode is ready to
+be used without restarting Emacs after a package update.
+
+** Theme & Visual
+*** Color & Icons                                  :doom:icons:theme:color:
+
+All-the-icons provides icons that themes can use to replace indicators
+with appropriate icons, for example a branching logo for vcs status.
+
+#+begin_src emacs-lisp
+(use-package all-the-icons :ensure t)
+#+end_src
+
+Doom-themes and doom-modeline are beautiful theme frameworks that give
+Emacs a modern, snazzy look. I prefer the doom-vibrant theme but this
+can be easily changed in the load-theme declaration of doom.
+
+#+begin_src emacs-lisp
+(use-package doom-themes :ensure t
+  :config (load-theme 'doom-vibrant t)
+  (doom-themes-org-config))
+(use-package doom-modeline :ensure t
+  :hook (after-init . doom-modeline-mode)
+  :config (setq doom-modeline-icon (display-graphic-p))
+  (setq find-file-visit-truename t))
+#+end_src
+
+*** Dashboard                                       :dash:startpage:recent:
+
+Dashboard is a start page for Emacs that keeps a list of recent files
+and displays upcoming entries in the org-agenda.
+
+#+begin_src emacs-lisp
+(use-package dashboard :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-banner-logo-title "Welcome to GNU Emacs")
+  (setq recentf-save-file
+        (expand-file-name (locate-user-emacs-file ".cache/recentf")))
+  (setq dashboard-set-footer nil)
+  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-center-content t)
+  (setq dashboard-items '((projects . 5)
+                        (recents  . 5)
+                        (bookmarks . 5)
+                        (agenda . 5))))
+#+end_src
+
+*** Centaur Tabs
+
+Centaur-tabs brings browser-like tabs to Emacs. I personally dont get
+much use out of them but I must admit they are snazzy.
+
+#+begin_src emacs-lisp
+(use-package centaur-tabs :ensure t
+  :config
+    (centaur-tabs-headline-match)
+  (setq centaur-tabs-set-icons t)
+  :bind
+  ("C-<tab>" . centaur-tabs-forward)
+  ("C-c <tab>" . centaur-tabs-mode))
+#+end_src
+
+*** Treemacs
+
+Another neat visual package I personally dont get much use out of. 
+Treemacs is a project/file explorer sidebar similar to many IDEs. The
+two other packages provide integration with magit and projectile.
+
+#+begin_src emacs-lisp
+(use-package treemacs :ensure t
+  :defer t
+  :config (treemacs-git-mode 'deferred)
+  (progn (setq treemacs-width 30)))
+(use-package treemacs-magit :ensure t
+  :after treemacs magit)
+(use-package treemacs-projectile :ensure t
+  :after treemacs projectile)
+#+end_src
+
+*** Bar Cursor
+
+For those of us who think a small bar style cursor is superior to the block.
+
+#+begin_src emacs-lisp
+(use-package bar-cursor :ensure t
+  :config (bar-cursor-mode t))
+#+end_src
+
+** Behavior
+*** Ivy
+
+Ivy is a regex based replacement for the emacs C-f and M-x commands that
+saves many keystrokes with its predictive abilities.
+
+#+begin_src emacs-lisp
+(use-package ivy :ensure t :diminish
+  :config (ivy-mode t))
+#+end_src
+
+*** Counsel
+
+Counsel-mode replaces many built in Emacs interactive functions with
+better defaults. It is developed to work well with ivy & swiper, and
+they are all actually part of the same project. By turning on counsel
+mode globally in the use-package block, you replace the emacs commands
+with their counsel equivalents.
+
+#+begin_src emacs-lisp
+(use-package counsel :ensure t :diminish
+  :config (counsel-mode t))
+#+end_src
+
+*** Swiper
+
+Swiper is a package for searching through buffers. It is similar to
+the built in isearch, and in my configuration I replaced the C-s
+keybinding with swiper.
+
+#+begin_src emacs-lisp
+(use-package swiper :ensure t :diminish
+  :bind ("C-s" . swiper-isearch) ("C-r" . swiper-isearch-backward))
+#+end_src
+
+*** God Mode
+
+God-mode is a vi-like modal editing system for emacs. When God-mode
+is enabled, emacs interprets <some keystroke> as <C-some keystroke>.
+It does *not* have vi-like bindings, it instead uses emacs keybindings
+in a modal system. For example pressing n moves the cursor downwards
+like C-n would outside of God-mode. I have God-mode bound to escape.
+
+#+begin_src emacs-lisp
+(use-package god-mode :ensure t
+  :bind ("<escape>" . god-mode-all)
+  :config (setq god-exempt-major-modes nil)
+  (setq god-exempt-predicates nil))
+#+end_src
+
+*** Tramp
+
+Tramp is an emacs built-in function for editing files on remote
+systems. It treats remote file systems, or different users on the
+same system, as a single logical system.
+
+#+begin_src emacs-lisp
+(use-package tramp
+  :config  (setq tramp-default-method "ssh")
+  (setq tramp-persistency-file-name
+        (expand-file-name
+         (locate-user-emacs-file ".cache/tramp"))))
+#+end_src
+
+*** Eshell
+
+Emacs's built in shell is an underrated feature, probably in part
+due to its less than attractive default appearance. This section
+installs an external package for a toggle-able popup terminal
+bound to f12. On top of this, I made some of my own customizations
+in the psishell package. Most of these are visual changes, but a
+few minor aliases and custom functions can be found in there as well.
+
+#+begin_src emacs-lisp
+(use-package psishell)
+(use-package eshell-toggle :ensure t :defer t
+  :custom
+  (eshell-toggle-size-fraction 3)
+  (eshell-toggle-use-projectile-root t)
+  (eshell-toggle-run-command nil)
+  (eshell-toggle-init-function #'eshell-toggle-init-eshell)
+  :bind
+  ("<f12>" . eshell-toggle))
+#+end_src
+
+** Projects and VCS
+*** Magit
+
+Magit is a powerful git front-end for emacs that exposes most of
+git's functions without dumbing them down. They can be called from
+eshell which is extremely cool. I currently cant remember why I set
+the transient-values file to the projectile cache.
+
+#+begin_src emacs-lisp
+(use-package magit :ensure t
+  :config
+  (setq transient-values-file
+        (expand-file-name
+         (locate-user-emacs-file ".cache/projectile-cache")))
+  (setq transient-history-file
+        (expand-file-name
+         (locate-user-emacs-file ".cache/projectile-cache"))))
+#+end_src
+
+*** Projectile
+
+Projectile is a project management system that lets other packages
+like LSP automatically detect project roots. It is aware of version
+control which means LSP & dap are also aware of version control.
+
+#+begin_src emacs-lisp
+(use-package projectile :ensure t
+  :config
+  (setq projectile-cache-file
+        (expand-file-name
+         (locate-user-emacs-file ".cache/projectile-cache")))
+  (setq projectile-known-projects-file
+        (expand-file-name
+         (locate-user-emacs-file ".cache/projectile-bookmarks.eld"))))
+#+end_src
 
 ** Org Mode
 
-Custom theme elements for org mode.
+Custom theme elements for org mode. Attribute setting lines can be disabled
+if you prefer a single global font size in org-mode. Org-bullets can be
+removed if you prefer asterisk's over bullets for org headings. Heading-based
+indentation can be disabled by removing the org-indent-mode hook.
+
 #+begin_src emacs-lisp
 (use-package org-bullets :ensure t
-  :hook (org-mode . org-bullets-mode))
+:hook (org-mode . org-bullets-mode) (org-mode . org-indent-mode))
 (set-face-attribute 'org-level-1 nil :height 1.4)
 (set-face-attribute 'org-level-2 nil :height 1.25)
 (set-face-attribute 'org-document-title nil :height 1.5)
 #+end_src
 
-Org Babel language configuration.
+Org Babel language configuration. Eventually planning to make this configurable
+outside of the elisp code.
+
 #+begin_src emacs-lisp
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((python . t)
-     (shell . t)
-     (C . t)
-     (makefile . t)))
+(org-babel-do-load-languages
+'org-babel-load-languages
+'((python . t)
+(shell . t)
+(C . t)
+(makefile . t)
+(matlab . t)))
 #+end_src
+
+** Programming Languages
+*** Python                                            :python:py:scripting:
+
+Anaconda mode provides general python running/debugging support on top of
+emacs default python-mode. Pyvenv provides a nice way to switch between
+different virtual environments inside of emacs. Overall my python setup is
+relatively untested, and more granular configuration might make it easier
+to work with.
+
+#+begin_src emacs-lisp
+(use-package anaconda-mode :ensure t
+  :hook python-mode)
+(use-package pyvenv :ensure t)
+#+end_src
+
+*** Golang                                                      :go:golang:
+
+Go syntax highlighting & snippets. Additional support for semantic
+auto-completion and debugging is provided by lsp and dap elsewhere.
+
+#+begin_src emacs-lisp
+  (use-package go-mode :ensure t
+    :hook (go-mode . lsp))
+  (use-package go-snippets :ensure t
+    :after yasnippet)
+#+end_src
+
+*** Common Lisp                                     :lisp:slime:functional:
+
+Common Lisp support via the absolutely awesome SLIME environment. Requires
+a bit of setup, documented on slimes website [[https://common-lisp.net/project/slime/][Here]]. I chose the debian default
+sblc binary location for inferior-lisp-program, point it to wherever you have
+your common lisp implementation installed.
+
+#+begin_src emacs-lisp
+(use-package slime :ensure t :defer
+  :config
+  (setq inferior-lisp-program "/usr/bin/sbcl")
+  (add-to-list 'slime-contribs 'slime-fancy))
+(use-package slime-company :ensure t :after slime company)
+#+end_src
+
+*** Matlab                                            :matlab:math:algebra:
+
+Enables Emacs' built-in support for MATLAB. The matlab-shell-command variable
+can be changed if matlab is installed in a nonstandard location and/or is not in
+the users $PATH environmental variable. This approach is reportedy specific to
+Unix-like OS's and a different method has to be used on Win32.
+
+#+begin_src emacs-lisp
+  (use-package matlab-mode :ensure t
+    :config
+    (setq matlab-indent-function t)
+    (setq matlab-shell-command "matlab")
+    :defer t)
+#+end_src
+
+** Misc Development
+*** Code Completion                              :lsp:company:intellisense:
+
+Yasnippet provides auto-complete code snippets that can be made/enabled
+on a language specific basis.
+
+#+begin_src emacs-lisp
+(use-package yasnippet :ensure t)
+#+end_src
+
+Company acts as an intellisense-like autocomplete front end for the various
+language specific completion engines in emacs. Company-box provides logos
+for different kinds of completions that make it easier to visually parse
+the completion list.
+
+#+begin_src emacs-lisp
+(use-package company :ensure t :diminish
+  :defer 2
+  :custom
+  (company-minimum-prefix-length 2)
+  (company-tooltip-align-annotations 't)
+  (global-company-mode t))
+(use-package company-box :ensure t
+  :after company
+  :diminish
+  :hook (company-mode . company-box-mode))
+#+end_src
+
+The *Language Server Protocol* is an editor-agnostic code parsing/analysis
+protocol that editors can use to communicate with code completion engines.
+The lsp-mode Emacs package is an implementation of this protocol, and the
+company-lsp package passes this language data to the company-mode front end.
+Origami is an Emacs package that provides code folding, and lsp-origami
+provides origami with language specific code folding configuration.
+
+Later on, I will move the C and C++ specific LSP configuration out into a
+different configuration area. The clangd executable should be configurable
+later as well.
+
+#+begin_src emacs-lisp
+(use-package lsp-mode :ensure t
+  :pin melpa-stable
+  :hook (c-mode . lsp) (c++-mode . lsp)
+  :commands lsp
+  :config (setq lsp-clients-clangd-executable "/usr/bin/clangd-7")
+  (setq lsp-session-file (expand-file-name
+                          (locate-user-emacs-file ".cache/lsp-session"))))
+(use-package company-lsp :ensure t
+  :commands company-lsp)
+(use-package origami :ensure t
+  :config (global-origami-mode)
+  :bind ("C-c f" . origami-forward-toggle-node))
+(use-package lsp-origami :ensure t)
+#+end_src
+
+*** Debugging                                                   :dap:debug:
+
+IDE-like debugging support is provided by the dap-mode package. For
+now, the dap languages are specified here in the use-package declaration.
+
+#+begin_src emacs-lisp
+(use-package dap-mode :ensure t
+  :config (tooltip-mode 1) (dap-mode 1)
+  (dap-ui-mode 1) (dap-tooltip-mode 1)
+  (require 'dap-go) (require 'dap-gdb-lldb) (require 'dap-python)
+  (setq dap-breakpoints-file
+        (expand-file-name (locate-user-emacs-file ".cache/dap-breakpoints")))
+  :bind ("<f5>" . dap-debug)
+  ("C-c b" . dap-breakpoint-toggle)
+  ("C-c n" . dap-continue))
+#+end_src
+

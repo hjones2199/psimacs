@@ -1,5 +1,6 @@
 *.elc
 *~
+psimacs.el
 snippets
 recentf
 elpa

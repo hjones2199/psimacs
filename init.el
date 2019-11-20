@@ -29,6 +29,10 @@
  '(custom-safe-themes
    (quote
     ("423435c7b0e6c0942f16519fa9e17793da940184a50201a4d932eafe4c94c92d" default)))
+ '(eshell-toggle-init-function (quote eshell-toggle-init-eshell) t)
+ '(eshell-toggle-run-command nil t)
+ '(eshell-toggle-size-fraction 3 t)
+ '(eshell-toggle-use-projectile-root t t)
  '(global-company-mode t)
  '(inhibit-startup-screen t)
  '(package-selected-packages (quote (ivy))))
