@@ -2,6 +2,19 @@
 #+AUTHOR: hjones2199
 #+STARTUP: indent
 
+* Configuration
+
+To confirm your changes to the Psimacs configuration click the link below.
+[[elisp:(org-sbe "del-psimacs-elc")][CONFIRM CHANGES]]
+
+:delete-init:
+#+name: del-psimacs-elc
+#+begin_src emacs-lisp :tangle no
+  (delete-file
+   (expand-file-name
+    (locate-user-emacs-file "psimacs.elc")))
+#+end_src
+:end:
 * Packages
 
 Installs external packages, and configures both baseline and external packages.
@@ -232,11 +245,14 @@ removed if you prefer asterisk's over bullets for org headings. Heading-based
 indentation can be disabled by removing the org-indent-mode hook.
 
 #+begin_src emacs-lisp
-(use-package org-bullets :ensure t
-:hook (org-mode . org-bullets-mode) (org-mode . org-indent-mode))
-(set-face-attribute 'org-level-1 nil :height 1.4)
-(set-face-attribute 'org-level-2 nil :height 1.25)
-(set-face-attribute 'org-document-title nil :height 1.5)
+  (use-package org-bullets :ensure t
+  :hook (org-mode . org-bullets-mode) (org-mode . org-indent-mode))
+  (set-face-attribute 'org-level-1 nil :height 1.4)
+  (set-face-attribute 'org-level-2 nil :height 1.25)
+  (set-face-attribute 'org-document-title nil :height 1.5)
+  (setq org-id-locations-file
+        (expand-file-name
+         (concat user-emacs-directory ".cache/org-id-locations")))
 #+end_src
 
 Org Babel language configuration. Eventually planning to make this configurable
