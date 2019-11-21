@@ -5,14 +5,17 @@
 * Configuration
 
 To confirm your changes to the Psimacs configuration click the link below.
-[[elisp:(org-sbe "del-psimacs-elc")][CONFIRM CHANGES]]
+[[elisp:(psimacs-regen-conf)][CONFIRM CHANGES]]
 
-:delete-init:
-#+name: del-psimacs-elc
-#+begin_src emacs-lisp :tangle no
-  (delete-file
-   (expand-file-name
-    (locate-user-emacs-file "psimacs.elc")))
+:Psimacs-reconfig:
+#+name: psimacs-regen-conf
+#+begin_src emacs-lisp
+  (defun psimacs-regen-conf ()
+    "Deletes the compiled psimacs.elc file, regenerating at next startup"
+    (interactive)
+    (delete-file
+     (expand-file-name
+      (locate-user-emacs-file "psimacs.elc"))))
 #+end_src
 :end:
 * Packages
@@ -259,13 +262,14 @@ Org Babel language configuration. Eventually planning to make this configurable
 outside of the elisp code.
 
 #+begin_src emacs-lisp
-(org-babel-do-load-languages
-'org-babel-load-languages
-'((python . t)
-(shell . t)
-(C . t)
-(makefile . t)
-(matlab . t)))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((python . t)
+     (shell . t)
+     (C . t)
+     (makefile . t)
+     (octave . t)
+     (matlab . t)))
 #+end_src
 
 ** Programming Languages
@@ -317,12 +321,29 @@ can be changed if matlab is installed in a nonstandard location and/or is not in
 the users $PATH environmental variable. This approach is reportedy specific to
 Unix-like OS's and a different method has to be used on Win32.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package matlab-mode :ensure t
     :config
     (setq matlab-indent-function t)
     (setq matlab-shell-command "matlab")
     :defer t)
+#+end_src
+
+*** Octave                                            :octave:math:algebra:
+
+Enables Emacs built-in octave support. This is sorta mutually exlusive with
+the matlab mode at the moment, probably just the way I have it configured.
+
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+
+  (add-hook 'octave-mode-hook
+            (lambda ()
+              (abbrev-mode 1)
+              (auto-fill-mode 1)
+              (if (eq window-system 'x)
+                  (font-lock-mode 1))))
+
 #+end_src
 
 ** Misc Development
@@ -366,7 +387,7 @@ later as well.
 
 #+begin_src emacs-lisp
 (use-package lsp-mode :ensure t
-  :pin melpa-stable
+  ; :pin melpa-stable
   :hook (c-mode . lsp) (c++-mode . lsp)
   :commands lsp
   :config (setq lsp-clients-clangd-executable "/usr/bin/clangd-7")
