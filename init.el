@@ -1,13 +1,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Init file that calls the actual
 ;;; configuration/theming from the
-;;; invicta directory.
+;;; psimacs directory.
 ;;; This file is not a part of GNU Emacs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Adds invicta config to the loadpath
-(push (expand-file-name (locate-user-emacs-file "invicta")) load-path)
-(require 'invictainit)
+;; Adds psimacs config to the loadpath
+(push (expand-file-name (locate-user-emacs-file "psimacs")) load-path)
+(require 'psi-init)
 
 ;; Loads the psimacs configuration, tangling and compiling the
 ;; file if it does not exist.
@@ -25,20 +25,3 @@
  '(menu ((t (:foreground "brightblack" :inverse-video t))))
  '(swiper-line-face ((t (:background "dim gray" :foreground "#1c1f24"))))
  '(tty-menu-selected-face ((t (:background "color-208")))))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(company-minimum-prefix-length 2)
- '(company-tooltip-align-annotations t)
- '(custom-safe-themes
-   (quote
-    ("423435c7b0e6c0942f16519fa9e17793da940184a50201a4d932eafe4c94c92d" default)))
- '(eshell-toggle-init-function (quote eshell-toggle-init-eshell))
- '(eshell-toggle-run-command nil)
- '(eshell-toggle-size-fraction 3)
- '(eshell-toggle-use-projectile-root t)
- '(global-company-mode t)
- '(inhibit-startup-screen t)
- '(package-selected-packages (quote (ivy))))

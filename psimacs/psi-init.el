@@ -2,9 +2,9 @@
 ;;; This file is not a part of GNU Emacs ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;; Package Management ;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Calls the Psimacs setup files ;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Fixes ELPA handshake bug in Emacs 26
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
@@ -45,4 +45,6 @@
 
 ;; Projects and global tools
 
-(provide 'invictapkg)
+(require 'psi-modes)
+
+(provide 'psi-init)

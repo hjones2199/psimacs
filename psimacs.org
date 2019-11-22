@@ -18,6 +18,88 @@ To confirm your changes to the Psimacs configuration click the link below.
       (locate-user-emacs-file "psimacs.elc"))))
 #+end_src
 :end:
+
+** Theme
+*** Start Screen
+
+Disables emacs default start screen, since we're using dashboard instead.
+
+#+begin_src emacs-lisp
+  (custom-set-variables
+   '(inhibit-startup-screen t))
+#+end_src
+
+*** UI elements
+
+Disables blinking cursor, the tool-bar, and the menu-bar. Disables the
+scroll-bar on graphical systems as  well.
+
+#+begin_src emacs-lisp
+  (blink-cursor-mode 0)
+  (tool-bar-mode 0)
+  (menu-bar-mode 0)
+
+  (if (display-graphic-p)
+      (scroll-bar-mode 0))
+#+end_src
+
+*** Battery mode
+
+Binds display-battery-mode to C-c <f12>.
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-c <f12>") 'display-battery-mode)
+#+end_src
+
+*** Font
+
+Sets the default font and size.
+
+#+begin_src emacs-lisp
+  (add-to-list 'default-frame-alist '(font . "Fira Code-13" ))
+#+end_src
+
+** Behavior
+*** Backups
+
+Sets the location for backup files to the OS temp file directory.
+On Unix, this directory is located at /tmp.
+
+#+begin_src emacs-lisp
+  (setq backup-directory-alist
+        `((".*" . ,temporary-file-directory)))
+  (setq auto-save-file-name-transforms
+        `((".*" ,temporary-file-directory t)))
+#+end_src
+
+*** Pair matching
+
+Sets up global auto-pairing of parentheses, quotes, brackets etc.
+
+#+begin_src emacs-lisp
+  (add-hook 'after-init-hook 'electric-pair-mode)
+  (add-hook 'after-init-hook 'show-paren-mode)
+#+end_src
+
+*** Line numbers
+
+Global line numbers on all programming, text, and org buffers.
+
+#+begin_src emacs-lisp
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+  (add-hook 'text-mode-hook 'display-line-numbers-mode)
+  (add-hook 'org-mode-hook 'display-line-numbers-mode)
+#+end_src
+
+*** Tabs vs spaces
+
+Sets default tab indent to be three space characters.
+
+#+begin_src emacs-lisp
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 3)
+#+end_src
+
 * Packages
 
 Installs external packages, and configures both baseline and external packages.

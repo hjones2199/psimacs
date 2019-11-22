@@ -4,18 +4,13 @@
 
 ;;;;; Defines custom modes ;;;;;
 
-;(define-minor-mode inv-ide-mode
-;  "A minor mode that turns on various IDE UI features."
-;  :lighter " InvictaIDE"
-;  (dap-ui-mode) (treemacs))
-
-(defun invicta-ui ()
+(defun psi-ui ()
   "Toggles various UI features for an IDE-like experience"
   (interactive)
   (dap-ui-mode) (dap-ui-locals) (treemacs))
 
 ;;;;; Oz integration from within emacs itself ;;;;;
-(defun mozart-run ()
+(defun mozart-activate ()
   "Turns on the Oz programming engine"
   (interactive)
   (setenv "OZHOME" "/usr")
@@ -26,4 +21,4 @@
    '((oz . t))))
 
 
-(provide 'invictamodes)
+(provide 'psi-modes)
