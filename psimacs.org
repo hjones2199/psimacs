@@ -185,23 +185,24 @@ same system, as a single logical system.
 
 *** Eshell
 
-Emacs's built in shell is an underrated feature, probably in part
-due to its less than attractive default appearance. This section
-installs an external package for a toggle-able popup terminal
-bound to f12. On top of this, I made some of my own customizations
-in the psishell package. Most of these are visual changes, but a
-few minor aliases and custom functions can be found in there as well.
+Emacs's built in shell is an underrated feature, probably in part due
+to its less than attractive default appearance. This section installs
+an external package for a toggle-able popup terminal bound to f12. On
+top of this, I made some of my own customizations in the psishell
+package. Most of these are visual changes, but a few minor aliases and
+custom functions can be found in there as well.
 
 #+begin_src emacs-lisp
-(use-package psishell)
-(use-package eshell-toggle :ensure t :defer t
-  :custom
-  (eshell-toggle-size-fraction 3)
-  (eshell-toggle-use-projectile-root t)
-  (eshell-toggle-run-command nil)
-  (eshell-toggle-init-function #'eshell-toggle-init-eshell)
-  :bind
-  ("<f12>" . eshell-toggle))
+  (use-package psishell
+    :config (psiprompt-initialize))
+  (use-package eshell-toggle :ensure t :defer t
+    :custom
+    (eshell-toggle-size-fraction 3)
+    (eshell-toggle-use-projectile-root t)
+    (eshell-toggle-run-command nil)
+    (eshell-toggle-init-function #'eshell-toggle-init-eshell)
+    :bind
+    ("<f12>" . eshell-toggle))
 #+end_src
 
 ** Projects and VCS
@@ -333,9 +334,12 @@ Unix-like OS's and a different method has to be used on Win32.
 
 Enables Emacs built-in octave support. This is sorta mutually exlusive with
 the matlab mode at the moment, probably just the way I have it configured.
+The /--line-editing/ argument is a workaround for a bug where QT plot windows
+refuse to close.
 
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+  (setq inferior-octave-startup-args '("-i" "--line-editing"))
 
   (add-hook 'octave-mode-hook
             (lambda ()

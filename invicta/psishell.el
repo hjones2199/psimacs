@@ -45,8 +45,8 @@
   (kill-buffer "*eshell*")
   (eshell))
 
-(define-minor-mode psishell-mode
-  "Activates psishell"
-  (psiprompt-initialize))
+;;(define-minor-mode psishell-mode
+;;  "Activates psishell"
+;;  (psiprompt-initialize))
 
 (provide 'psishell)
