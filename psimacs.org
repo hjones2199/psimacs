@@ -53,10 +53,15 @@ Binds display-battery-mode to C-c <f12>.
 
 *** Font
 
-Sets the default font and size.
+Sets the default font and size. The commented out selections are all high
+quality programming fonts. Source Code Pro is available in most major Linux
+distro repositories, the others you may have to install yourself.
 
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(font . "Fira Code-13" ))
+  ; (add-to-list 'default-frame-alist '(font . "Fira Code-13" ))
+  ; (add-to-list 'default-frame-alist '(font . "Hack-13" ))
+  ; (add-to-list 'default-frame-alist '(font . "Source Code Pro-13" ))
+  (add-to-list 'default-frame-alist '(font . "Hasklig-13" ))
 #+end_src
 
 ** Behavior
@@ -120,7 +125,12 @@ All-the-icons provides icons that themes can use to replace indicators
 with appropriate icons, for example a branching logo for vcs status.
 
 #+begin_src emacs-lisp
-(use-package all-the-icons :ensure t)
+  (use-package all-the-icons :ensure t)
+  (use-package all-the-icons-dired :ensure t
+    :hook (dired-mode . all-the-icons-dired-mode))
+  (use-package all-the-icons-ivy :ensure t
+    :config
+    (all-the-icons-ivy-setup))
 #+end_src
 
 Doom-themes and doom-modeline are beautiful theme frameworks that give
@@ -128,13 +138,16 @@ Emacs a modern, snazzy look. I prefer the doom-vibrant theme but this
 can be easily changed in the load-theme declaration of doom.
 
 #+begin_src emacs-lisp
-(use-package doom-themes :ensure t
-  :config (load-theme 'doom-vibrant t)
-  (doom-themes-org-config))
-(use-package doom-modeline :ensure t
-  :hook (after-init . doom-modeline-mode)
-  :config (setq doom-modeline-icon (display-graphic-p))
-  (setq find-file-visit-truename t))
+  (use-package doom-themes :ensure t
+    :config (load-theme 'doom-vibrant t)
+    (doom-themes-org-config))
+  (use-package doom-modeline :ensure t
+    :hook (after-init . doom-modeline-mode)
+    :config
+    (setq doom-modeline-height 22)
+    (setq doom-modeline-icon (display-graphic-p))
+    (setq find-file-visit-truename t)
+    (setq doom-modeline-unicode-fallback t))
 #+end_src
 
 *** Dashboard                                       :dash:startpage:recent:
@@ -293,7 +306,7 @@ custom functions can be found in there as well.
     (eshell-toggle-run-command nil)
     (eshell-toggle-init-function #'eshell-toggle-init-eshell)
     :bind
-    ("<f12> 1" . eshell-toggle))
+    ("<f12>" . eshell-toggle))
 #+end_src
 
 ** Projects and VCS
@@ -491,7 +504,9 @@ later as well.
     (setq lsp-session-file (expand-file-name
                             (locate-user-emacs-file ".cache/lsp-session"))))
   (use-package lsp-ui :ensure t
-    :hook (lsp-mode . lsp-ui-mode))
+    :hook (lsp-mode . lsp-ui-mode)
+    :config (setq lsp-ui-peek-always-show t)
+    :bind ("M-+" . lsp-ui-peek-find-definitions))
   (use-package company-lsp :ensure t
     :commands company-lsp)
   (use-package origami :ensure t
