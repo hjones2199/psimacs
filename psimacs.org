@@ -236,6 +236,15 @@ keybinding with swiper.
   :bind ("C-s" . swiper-isearch) ("C-r" . swiper-isearch-backward))
 #+end_src
 
+*** Flycheck
+
+A better kind of flymake, Interfaces well with LSP.
+
+#+begin_src emacs-lisp
+  (use-package flycheck :ensure t
+    :hook (after-init . global-flycheck-mode))
+#+end_src
+
 *** God Mode
 
 God-mode is a vi-like modal editing system for emacs. When God-mode
@@ -284,7 +293,7 @@ custom functions can be found in there as well.
     (eshell-toggle-run-command nil)
     (eshell-toggle-init-function #'eshell-toggle-init-eshell)
     :bind
-    ("<f12>" . eshell-toggle))
+    ("<f12> 1" . eshell-toggle))
 #+end_src
 
 ** Projects and VCS
@@ -472,19 +481,23 @@ different configuration area. The clangd executable should be configurable
 later as well.
 
 #+begin_src emacs-lisp
-(use-package lsp-mode :ensure t
-  ; :pin melpa-stable
-  :hook (c-mode . lsp) (c++-mode . lsp)
-  :commands lsp
-  :config (setq lsp-clients-clangd-executable "/usr/bin/clangd-7")
-  (setq lsp-session-file (expand-file-name
-                          (locate-user-emacs-file ".cache/lsp-session"))))
-(use-package company-lsp :ensure t
-  :commands company-lsp)
-(use-package origami :ensure t
-  :config (global-origami-mode)
-  :bind ("C-c f" . origami-forward-toggle-node))
-(use-package lsp-origami :ensure t)
+  (use-package lsp-mode :ensure t
+    ; :pin melpa-stable
+    :hook (c-mode . lsp) (c++-mode . lsp)
+    :commands lsp
+    :config
+    (setq lsp-prefer-flymake nil)
+    (setq lsp-clients-clangd-executable "/usr/bin/clangd-7")
+    (setq lsp-session-file (expand-file-name
+                            (locate-user-emacs-file ".cache/lsp-session"))))
+  (use-package lsp-ui :ensure t
+    :hook (lsp-mode . lsp-ui-mode))
+  (use-package company-lsp :ensure t
+    :commands company-lsp)
+  (use-package origami :ensure t
+    :config (global-origami-mode)
+    :bind ("C-c f" . origami-forward-toggle-node))
+  (use-package lsp-origami :ensure t)
 #+end_src
 
 *** Debugging                                                   :dap:debug:
