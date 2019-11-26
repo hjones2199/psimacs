@@ -25,3 +25,5 @@
  '(menu ((t (:foreground "brightblack" :inverse-video t))))
  '(swiper-line-face ((t (:background "dim gray" :foreground "#1c1f24"))))
  '(tty-menu-selected-face ((t (:background "color-208")))))
+
+

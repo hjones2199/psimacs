@@ -221,8 +221,9 @@ Ivy is a regex based replacement for the emacs C-f and M-x commands that
 saves many keystrokes with its predictive abilities.
 
 #+begin_src emacs-lisp
-(use-package ivy :ensure t :diminish
-  :config (ivy-mode t))
+  (use-package ivy :ensure t :diminish
+    :config (ivy-mode t)
+    (setq ivy-use-selectable-prompt t))
 #+end_src
 
 *** Counsel
@@ -259,6 +260,7 @@ A better kind of flymake, Interfaces well with LSP.
 #+end_src
 
 *** God Mode
+- DISABLED
 
 God-mode is a vi-like modal editing system for emacs. When God-mode
 is enabled, emacs interprets <some keystroke> as <C-some keystroke>.
@@ -266,11 +268,88 @@ It does *not* have vi-like bindings, it instead uses emacs keybindings
 in a modal system. For example pressing n moves the cursor downwards
 like C-n would outside of God-mode. I have God-mode bound to escape.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (use-package god-mode :ensure t
   :bind ("<escape>" . god-mode-all)
   :config (setq god-exempt-major-modes nil)
   (setq god-exempt-predicates nil))
+#+end_src
+
+*** Evil
+- Disabled
+
+I am currently toying with using evil mode, but with insert mode mapped
+to default emacs keybindings.
+
+Might want to try the packages below too:
+- evil-tutor
+- evil-magit
+- evil-org
+- evil-space
+- evil-ediff
+
+#+begin_src emacs-lisp :tangle no
+  (use-package evil :ensure t
+    :config
+    (setq evil-emacs-state-modes nil)
+    (setq evil-insert-state-modes nil)
+    (setq evil-motion-state-modes nil)
+    (setq evil-default-state 'evil-emacs-state)
+    (define-key evil-normal-state-map "i" 'evil-emacs-state)
+    (define-key evil-normal-state-map "\C-z" 'evil-insert-state)
+    (define-key evil-emacs-state-map [escape] 'evil-normal-state)
+    (evil-mode 1))
+#+end_src
+
+*** Ryo
+
+I am also currently toying with creating my own custom modal keymap via
+Ryo. I basically just want vim nav keys along with some emacs commands
+without their prefix.
+
+#+begin_src emacs-lisp
+  (use-package ryo-modal :ensure t
+    :commands ryo-modal-mode
+    :bind ("<escape>" . ryo-modal-mode)
+    :config
+    (ryo-modal-keys
+     ;;("," ryo-modal-repeat)
+     ;;("q" ryo-modal-mode)
+     ;;("h" backward-char)
+     ;;("j" next-line)
+     ;;("k" previous-line)
+     ;;("l" forward-char)
+     ("n" next-line)
+     ("m" previous-line)
+     ("s" swiper-isearch)
+     ("a" beginning-of-line)
+     ("e" end-of-line)
+     ("f" forward-char)
+     ("b" backward-char)
+     ("k" kill-line)
+     ("y" yank)
+     ("/" undo)
+     ("c" "C-c")
+     ("<SPC>" set-mark-command)
+     ("w" kill-region))
+
+    (ryo-modal-keys
+     ;; First argument to ryo-modal-keys may be a list of keywords.
+     ;; These keywords will be applied to all keybindings.
+     (:norepeat t)
+     ("0" "M-0")
+     ("1" "M-1")
+     ("2" "M-2")
+     ("3" "M-3")
+     ("4" "M-4")
+     ("5" "M-5")
+     ("6" "M-6")
+     ("7" "M-7")
+     ("8" "M-8")
+     ("9" "M-9")
+     (":" "M-x")
+     ("x" "C-x")
+     ("C-x f" "C-x C-f")))
 #+end_src
 
 *** Tramp
