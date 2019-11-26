@@ -256,7 +256,15 @@ A better kind of flymake, Interfaces well with LSP.
 
 #+begin_src emacs-lisp
   (use-package flycheck :ensure t
-    :hook (after-init . global-flycheck-mode))
+    :hook (after-init . global-flycheck-mode)
+    :config
+    (add-to-list 'display-buffer-alist
+                 `(,(rx bos "*Flycheck errors*" eos)
+                   (display-buffer-reuse-window
+                    display-buffer-in-side-window)
+                   (side            . bottom)
+                   (reusable-frames . visible)
+                   (window-height   . 0.20))))
 #+end_src
 
 *** God Mode
