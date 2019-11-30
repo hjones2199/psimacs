@@ -1,21 +1,66 @@
-#+TITLE: Emacs-Invicta README
+#+TITLE: Psimacs README
 
 [[https://www.gnu.org/software/emacs/][file:https://img.shields.io/badge/Made%20For-Emacs%2026+-8732d7#.png]]
 
+
+* Information
+
+I built Psimacs primarily to be my personal Emacs configuration. It uses many of the
+UI features of Doom and Centaur Emacs, but without the heavy emphasis on Evil Mode.
+
+The grand majority of the functionality comes from the MELPA dependencies. They are
+installed and configured via /use-package/. One of the unique features of the
+configuration is cleaning up the "~/.emacs.d" directory by moving many auto-generated
+files to "~/.emacs.d/.cache". Additionally, Some custom functionality and themeing for
+eshell is implemented in the seperate "~/.emacs.d/psimacs/psishell.el" file.
+
+** Implementation
+
+Psimacs is an Emacs configuration implemented mostly as a literate org-mode file. It
+utilizes org-babel to parse the org markup language file *psimacs.org* and generate a
+byte-compiled emacs configuration. The various elisp blocks in *psimacs.org* are "tangled"
+into a single source code file that installs external packages and configures emacs.
+
+The init.el file sets up the package archives and /use-package/ so that org-mode can
+be updated from ELPA before org-babel tangles the *psimacs.org*. It also loads the
+elisp files in the "~/.emacs.d/psimacs" directory before the org file loads so that
+the custom elisp is available to /use-package/ immediately when the tangling begins.
+
 * Installation
-To try out Emacs-Invicta, first move your current .emacs.d to a different location:
+
+To try out Psimacs, first move your current .emacs.d to a different location:
+
 #+begin_src sh
 mv .emacs.d .emacs.d.old
 #+end_src
+
 Then clone the repo to *.emacs.d* in your home directory:
+
 #+begin_src sh
 git clone https://github.com/hjones2199/emacs-invicta.git ~/.emacs.d/
 #+end_src
-Emacs will install and configure Invicta's melpa dependencies on first run. The packages
-can be reconfigured or disabled in *~/.emacs.d/invicta/invictapkg.el.* See LSP and
+
+Emacs will install and configure Psimacs's melpa dependencies on first run. The packages
+can be reconfigured or disabled in *psimacs.org* See LSP and
 dap-mode's github READMEs for tips on configuring their language specific debugging
 features.
 
+* Customizing
+
+There is a link you can click at the top of the *psimacs.org* file that deletes the compiled
+configuration file, and a new one will be generated the next time emacs starts. This can
+also be called interactively in emacs with:
+
+#+begin_example
+M-x psimacs-regen-conf
+#+end_example
+
+You can also delete all customizations set through the emacs GUI with:
+
+#+begin_example
+M-x psimacs-remove-user-cust
+#+end_example
+
 * License
-Emacs Invicta is Licensed under the three clause BSD license, see the /LICENSE/ file
+Psimacs is Licensed under the three clause BSD license, see the /LICENSE/ file
 for details.
