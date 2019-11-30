@@ -37,7 +37,7 @@ mv .emacs.d .emacs.d.old
 Then clone the repo to *.emacs.d* in your home directory:
 
 #+begin_src sh
-git clone https://github.com/hjones2199/emacs-invicta.git ~/.emacs.d/
+git clone https://github.com/hjones2199/psimacs.git ~/.emacs.d/
 #+end_src
 
 Emacs will install and configure Psimacs's melpa dependencies on first run. The packages
