@@ -62,7 +62,7 @@ scroll-bar on graphical systems as  well.
 
 On terminal displays, set the menu color scheme manually.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (if (not (display-graphic-p))
       (set-face-background 'tty-menu-selected-face nil "color-208"))
 #+end_src
@@ -293,7 +293,6 @@ keybinding with swiper.
     (swiper-line-face
      ((t (:foreground "#1c1f24" :background "dim gray")))))
 #+end_src
-
 *** Flycheck
 
 A better kind of flymake, Interfaces well with LSP.
@@ -311,8 +310,17 @@ A better kind of flymake, Interfaces well with LSP.
                    (window-height   . 0.20))))
 #+end_src
 
+*** Hydra
+
+Hydra is a temporary situational keymapping package, useful to define
+temporary keymaps for debugging, quick navigation, etc. It can optionally
+provide a keymap cheat sheet in the mini-buffer.
+
+#+begin_src emacs-lisp
+(use-package hydra :ensure t)
+#+end_src
+
 *** God Mode
-- DISABLED
 
 God-mode is a vi-like modal editing system for emacs. When God-mode
 is enabled, emacs interprets <some keystroke> as <C-some keystroke>.
@@ -320,7 +328,7 @@ It does *not* have vi-like bindings, it instead uses emacs keybindings
 in a modal system. For example pressing n moves the cursor downwards
 like C-n would outside of God-mode. I have God-mode bound to escape.
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (use-package god-mode :ensure t
   :bind ("<escape>" . god-mode-all)
   :config (setq god-exempt-major-modes nil)
@@ -354,12 +362,13 @@ Might want to try the packages below too:
 #+end_src
 
 *** Ryo
+- DISABLED
 
 I am also currently toying with creating my own custom modal keymap via
 Ryo. I basically just want vim nav keys along with some emacs commands
 without their prefix.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package ryo-modal :ensure t
     :commands ryo-modal-mode
     :bind ("<escape>" . ryo-modal-mode)
@@ -671,14 +680,14 @@ IDE-like debugging support is provided by the dap-mode package. For
 now, the dap languages are specified here in the use-package declaration.
 
 #+begin_src emacs-lisp
-(use-package dap-mode :ensure t
-  :config (tooltip-mode 1) (dap-mode 1)
-  (dap-ui-mode 1) (dap-tooltip-mode 1)
-  (require 'dap-go) (require 'dap-gdb-lldb) (require 'dap-python)
-  (setq dap-breakpoints-file
-        (expand-file-name (locate-user-emacs-file ".cache/dap-breakpoints")))
-  :bind ("<f5>" . dap-debug)
-  ("C-c b" . dap-breakpoint-toggle)
-  ("C-c n" . dap-continue))
+  (use-package dap-mode :ensure t
+    :config (tooltip-mode 1) (dap-mode 1)
+    (dap-ui-mode 1) (dap-tooltip-mode 1)
+    (require 'dap-go) (require 'dap-gdb-lldb) (require 'dap-python)
+    (setq dap-breakpoints-file
+          (expand-file-name (locate-user-emacs-file ".cache/dap-breakpoints")))
+    :bind ("<f5>" . dap-debug)
+    ("C-c b" . dap-breakpoint-toggle)
+    ("C-c n" . dap-continue))
 #+end_src
 
