@@ -195,6 +195,17 @@ Modeline from Doom, has some problems in tty with all-the-icons.
     (setq doom-modeline-unicode-fallback t))
 #+end_src
 
+- DISABLED
+
+Spacemacs theme is a nice alternative to the doom themes, but I personally prefer
+doom-vibrant.
+
+#+begin_src emacs-lisp :tangle no
+  (use-package spacemacs-theme :ensure t
+    :defer t
+    :init (load-theme 'spacemacs-dark t))
+#+end_src
+
 *** Dashboard                                       :dash:startpage:recent:
 
 Dashboard is a start page for Emacs that keeps a list of recent files
@@ -261,6 +272,7 @@ For those of us who think a small bar style cursor is superior to the block.
 (use-package bar-cursor :ensure t
   :config (bar-cursor-mode t))
 #+end_src
+
 *** Indentation Guides
 
 Puts indentation guide vertical lines into source code files.
@@ -311,6 +323,7 @@ keybinding with swiper.
     (swiper-line-face
      ((t (:foreground "#1c1f24" :background "dim gray")))))
 #+end_src
+
 *** Flycheck
 
 A better kind of flymake, Interfaces well with LSP.
@@ -455,6 +468,7 @@ package. Most of these are visual changes, but a few minor aliases and
 custom functions can be found in there as well.
 
 #+begin_src emacs-lisp
+  (use-package eshell)
   (use-package psishell
     :config (psiprompt-initialize))
   (use-package eshell-toggle :ensure t :defer t
@@ -512,13 +526,16 @@ indentation can be disabled by removing the org-indent-mode hook.
 
 #+begin_src emacs-lisp
   (use-package org-bullets :ensure t
-  :hook (org-mode . org-bullets-mode) (org-mode . org-indent-mode))
-  (set-face-attribute 'org-level-1 nil :height 1.4)
-  (set-face-attribute 'org-level-2 nil :height 1.25)
-  (set-face-attribute 'org-document-title nil :height 1.5)
-  (setq org-id-locations-file
-        (expand-file-name
-         (concat user-emacs-directory ".cache/org-id-locations")))
+    :hook
+    (org-mode . org-bullets-mode)
+    (org-mode . org-indent-mode)
+    :config
+    (set-face-attribute 'org-level-1 nil :height 1.4)
+    (set-face-attribute 'org-level-2 nil :height 1.25)
+    (set-face-attribute 'org-document-title nil :height 1.5)
+    (setq org-id-locations-file
+          (expand-file-name
+           (concat user-emacs-directory ".cache/org-id-locations"))))
 #+end_src
 
 Org Babel language configuration. Eventually planning to make this configurable
@@ -562,7 +579,7 @@ auto-completion and debugging is provided by lsp and dap elsewhere.
     :after yasnippet)
 #+end_src
 
-*** Rust :systems:rustlang:rust:
+*** Rust                                            :systems:rustlang:rust:
 
 Rust syntax highlighting and LSP autocompletion. Rust-mode is provided by
 the rust project. Rustic is a third party, more actively developed Rust
