@@ -159,7 +159,7 @@ it loads before org-mode. This is necessary so that Org Mode is ready to
 be used without restarting Emacs after a package update.
 
 ** Theme & Visual
-*** Color & Icons                                  :doom:icons:theme:color:
+*** Icons                                               :icons:theme:color:
 
 All-the-icons provides icons that themes can use to replace indicators
 with appropriate icons, for example a branching logo for vcs status.
@@ -172,6 +172,8 @@ with appropriate icons, for example a branching logo for vcs status.
     :config
     (all-the-icons-ivy-setup))
 #+end_src
+
+*** Doom Theme
 
 Doom-themes and doom-modeline are beautiful theme frameworks that give
 Emacs a modern, snazzy look. I prefer the doom-vibrant theme but this
@@ -194,6 +196,8 @@ Modeline from Doom, has some problems in tty with all-the-icons.
     (setq find-file-visit-truename t)
     (setq doom-modeline-unicode-fallback t))
 #+end_src
+
+*** Spacemacs Theme
 
 - DISABLED
 
@@ -648,6 +652,14 @@ refuse to close.
 
 #+end_src
 
+*** Nix
+
+Provides a mode for editing Nix configuration files.
+
+#+begin_src emacs-lisp
+  (use-package nix-mode :ensure t)
+#+end_src
+
 ** Misc Development
 *** Code Completion                              :lsp:company:intellisense:
 
@@ -656,6 +668,7 @@ on a language specific basis.
 
 #+begin_src emacs-lisp
 (use-package yasnippet :ensure t)
+(use-package yasnippet-snippets :ensure t)
 #+end_src
 
 Company acts as an intellisense-like autocomplete front end for the various
