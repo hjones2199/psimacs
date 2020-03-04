@@ -281,12 +281,21 @@ For those of us who think a small bar style cursor is superior to the block.
 
 Puts indentation guide vertical lines into source code files.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package highlight-indent-guides :ensure t
     :config
     (setq highlight-indent-guides-method 'character)
     :hook
     (prog-mode . highlight-indent-guides-mode))
+#+end_src
+
+*** Rainbow Delimiters
+
+Colorizes matching parentheses for easier parsing by humans.
+
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters :ensure t
+    :hook (lisp-mode . rainbow-delimiters-mode))
 #+end_src
 
 ** Behavior
@@ -658,6 +667,14 @@ Provides a mode for editing Nix configuration files.
 
 #+begin_src emacs-lisp
   (use-package nix-mode :ensure t)
+#+end_src
+
+*** Yaml
+
+Provides a mode for yaml files
+
+#+begin_src emacs-lisp
+  (use-package yaml-mode :ensure t)
 #+end_src
 
 ** Misc Development
