@@ -182,7 +182,10 @@ can be easily changed in the load-theme declaration of doom.
 #+begin_src emacs-lisp
   (use-package doom-themes :ensure t
     :config (load-theme 'doom-vibrant t)
-    (doom-themes-org-config))
+    (doom-themes-org-config)
+    :custom-face (org-block ((t (:background "#1B1D26"))))
+    (org-block-begin-line ((t (:background "#1B1D26"))))
+    (org-block-end-line ((t (:background "#1B1D26")))))
 #+end_src
 
 Modeline from Doom, has some problems in tty with all-the-icons.
@@ -295,7 +298,22 @@ Colorizes matching parentheses for easier parsing by humans.
 
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters :ensure t
-    :hook (lisp-mode . rainbow-delimiters-mode))
+    :hook (lisp-mode . rainbow-delimiters-mode)
+    (emacs-lisp-mode . rainbow-delimiters-mode)
+    (racket-mode . rainbow-delimiters-mode)
+    (scheme-mode . rainbow-delimiters-mode))
+#+end_src
+
+*** Popup frames
+
+Customizes various packages to use a single popup window framework
+
+#+begin_src emacs-lisp
+  (use-package posframe :ensure t)
+  (use-package flycheck-posframe :ensure t
+    :hook (flycheck-mode . flycheck-posframe-mode))
+  (use-package company-posframe :ensure t
+    :hook (company-mode . company-posframe-mode))
 #+end_src
 
 ** Behavior
@@ -380,7 +398,6 @@ like C-n would outside of God-mode. I have God-mode bound to escape.
 #+end_src
 
 *** Evil
-- Disabled
 
 I am currently toying with using evil mode, but with insert mode mapped
 to default emacs keybindings.
@@ -398,7 +415,7 @@ Might want to try the packages below too:
     (setq evil-emacs-state-modes nil)
     (setq evil-insert-state-modes nil)
     (setq evil-motion-state-modes nil)
-    (setq evil-default-state 'evil-emacs-state)
+    ;(setq evil-default-state 'evil-emacs-state)
     (define-key evil-normal-state-map "i" 'evil-emacs-state)
     (define-key evil-normal-state-map "\C-z" 'evil-insert-state)
     (define-key evil-emacs-state-map [escape] 'evil-normal-state)
