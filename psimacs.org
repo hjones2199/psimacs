@@ -58,6 +58,9 @@ scroll-bar on graphical systems as  well.
 
   (if (display-graphic-p)
       (scroll-bar-mode 0))
+
+  ; (add-hook 'fundemental-mode-hook 'hl-line-mode)
+  ; (add-hook 'prog-mode-hook 'hl-line-mode)
 #+end_src
 
 On terminal displays, set the menu color scheme manually.
@@ -185,7 +188,8 @@ can be easily changed in the load-theme declaration of doom.
     (doom-themes-org-config)
     :custom-face (org-block ((t (:background "#1B1D26"))))
     (org-block-begin-line ((t (:background "#1B1D26"))))
-    (org-block-end-line ((t (:background "#1B1D26")))))
+    (org-block-end-line ((t (:background "#1B1D26"))))
+    (hl-line ((t (:background "#1F2228")))))
 #+end_src
 
 Modeline from Doom, has some problems in tty with all-the-icons.
@@ -292,16 +296,30 @@ Puts indentation guide vertical lines into source code files.
     (prog-mode . highlight-indent-guides-mode))
 #+end_src
 
+*** Diff highlighting
+
+Highlights uncommitted & unsaved lines in the lefthand fringe
+
+#+begin_src emacs-lisp
+  (use-package diff-hl :ensure t
+    :config (global-diff-hl-mode)
+    :hook (prog-mode . diff-hl-flydiff-mode)
+    (fundemental-mode . diff-hl-flydiff-mode)
+    (conf-mode . diff-hl-flydiff-mode))
+#+end_src
+
 *** Rainbow Delimiters
 
 Colorizes matching parentheses for easier parsing by humans.
 
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters :ensure t
-    :hook (lisp-mode . rainbow-delimiters-mode)
+    :hook
     (emacs-lisp-mode . rainbow-delimiters-mode)
     (racket-mode . rainbow-delimiters-mode)
-    (scheme-mode . rainbow-delimiters-mode))
+    (scheme-mode . rainbow-delimiters-mode)
+    (lisp-mode . rainbow-delimiters-mode)
+    (sly-mode . rainbow-delimiters-mode))
 #+end_src
 
 *** Popup frames
@@ -310,8 +328,8 @@ Customizes various packages to use a single popup window framework
 
 #+begin_src emacs-lisp
   (use-package posframe :ensure t)
-  (use-package flycheck-posframe :ensure t
-    :hook (flycheck-mode . flycheck-posframe-mode))
+  ; (use-package flycheck-posframe :ensure t
+  ;  :hook (flycheck-mode . flycheck-posframe-mode))
   (use-package company-posframe :ensure t
     :hook (company-mode . company-posframe-mode))
 #+end_src
@@ -635,12 +653,19 @@ a bit of setup, documented on slimes website [[https://common-lisp.net/project/s
 sblc binary location for inferior-lisp-program, point it to wherever you have
 your common lisp implementation installed.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (use-package slime :ensure t :defer
   :config
   (setq inferior-lisp-program "/usr/bin/sbcl")
   (add-to-list 'slime-contribs 'slime-fancy))
 (use-package slime-company :ensure t :after slime company)
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package sly :ensure t
+    :config
+    (setq org-babel-lisp-eval-fn #'sly-eval)
+    (setq inferior-lisp-program "/usr/bin/sbcl"))
 #+end_src
 
 *** Matlab                                            :matlab:math:algebra:
