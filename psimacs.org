@@ -59,8 +59,6 @@ scroll-bar on graphical systems as  well.
   (if (display-graphic-p)
       (scroll-bar-mode 0))
 
-  ; (add-hook 'fundemental-mode-hook 'hl-line-mode)
-  ; (add-hook 'prog-mode-hook 'hl-line-mode)
 #+end_src
 
 On terminal displays, set the menu color scheme manually.
@@ -85,10 +83,10 @@ quality programming fonts. Source Code Pro is available in most major Linux
 distro repositories, the others you may have to install yourself.
 
 #+begin_src emacs-lisp
-  ; (add-to-list 'default-frame-alist '(font . "Fira Code-13" ))
-  ; (add-to-list 'default-frame-alist '(font . "Hack-13" ))
-  ; (add-to-list 'default-frame-alist '(font . "Source Code Pro-13" ))
-  (add-to-list 'default-frame-alist '(font . "Hasklig-13" ))
+  (add-to-list 'default-frame-alist '(font . "Fira Code-13"))
+  ; (add-to-list 'default-frame-alist '(font . "Hack-13"))
+  ; (add-to-list 'default-frame-alist '(font . "Source Code Pro-13"))
+  ; (add-to-list 'default-frame-alist '(font . "Hasklig-13"))
 #+end_src
 
 ** Behavior
@@ -223,21 +221,21 @@ Dashboard is a start page for Emacs that keeps a list of recent files
 and displays upcoming entries in the org-agenda.
 
 #+begin_src emacs-lisp
-(use-package dashboard :ensure t
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-banner-logo-title "Welcome to GNU Emacs")
-  (setq recentf-save-file
-        (expand-file-name (locate-user-emacs-file ".cache/recentf")))
-  (setq dashboard-set-footer nil)
-  (setq dashboard-startup-banner 'logo)
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-center-content t)
-  (setq dashboard-items '((projects . 5)
-                        (recents  . 5)
-                        (bookmarks . 5)
-                        (agenda . 5))))
+  (use-package dashboard :ensure t
+    :config
+    (dashboard-setup-startup-hook)
+    (setq dashboard-banner-logo-title "Welcome to GNU Emacs")
+    (setq recentf-save-file
+          (expand-file-name (locate-user-emacs-file ".cache/recentf")))
+    (setq dashboard-set-footer nil)
+    (setq dashboard-startup-banner 'logo)
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-set-file-icons t)
+    (setq dashboard-center-content t)
+    (setq dashboard-items '((projects . 5)
+                            (recents  . 5)
+                            (bookmarks . 5)
+                            (agenda . 5))))
 #+end_src
 
 *** Centaur Tabs
@@ -597,7 +595,8 @@ outside of the elisp code.
      (C . t)
      (makefile . t)
      (octave . t)
-     (matlab . t)))
+     (matlab . t)
+     (lisp . t)))
 #+end_src
 
 ** Programming Languages
@@ -656,7 +655,7 @@ your common lisp implementation installed.
 #+begin_src emacs-lisp :tangle no
 (use-package slime :ensure t :defer
   :config
-  (setq inferior-lisp-program "/usr/bin/sbcl")
+  (setq inferior-lisp-program "sbcl")
   (add-to-list 'slime-contribs 'slime-fancy))
 (use-package slime-company :ensure t :after slime company)
 #+end_src
@@ -665,7 +664,7 @@ your common lisp implementation installed.
   (use-package sly :ensure t
     :config
     (setq org-babel-lisp-eval-fn #'sly-eval)
-    (setq inferior-lisp-program "/usr/bin/sbcl"))
+    (setq inferior-lisp-program "sbcl"))
 #+end_src
 
 *** Matlab                                            :matlab:math:algebra:
@@ -766,7 +765,7 @@ later as well.
     :commands lsp
     :config
     (setq lsp-prefer-flymake nil)
-    (setq lsp-clients-clangd-executable "/usr/bin/clangd-7")
+    (setq lsp-clients-clangd-executable "clangd")
     (setq lsp-session-file (expand-file-name
                             (locate-user-emacs-file ".cache/lsp-session"))))
   (use-package lsp-ui :ensure t
