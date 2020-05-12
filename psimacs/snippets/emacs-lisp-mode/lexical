@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor: Hunter Jones
+# name: lexical
+# key: lexi
+# --
+;; -*- lexical-binding:t -*-
