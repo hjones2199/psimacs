@@ -660,6 +660,17 @@ your common lisp implementation installed.
     (setq inferior-lisp-program "sbcl"))
 #+end_src
 
+*** Scheme                                      :lisp:geiser:racket:scheme:
+
+Scheme support, specifically geared towards racket. A SLIME-like interface to racket
+is provided by geiser.
+
+#+begin_src emacs-lisp
+  (use-package geiser :ensure t
+    :config
+    (setq geiser-active-implementations '(racket)))
+#+end_src
+
 *** Matlab                                            :matlab:math:algebra:
 
 Enables Emacs' built-in support for MATLAB. The matlab-shell-command variable
