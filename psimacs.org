@@ -314,6 +314,7 @@ Colorizes matching parentheses for easier parsing by humans.
     :hook
     (emacs-lisp-mode . rainbow-delimiters-mode)
     (racket-mode . rainbow-delimiters-mode)
+    (racket-repl-mode . rainbow-delimiters-mode)
     (scheme-mode . rainbow-delimiters-mode)
     (lisp-mode . rainbow-delimiters-mode)
     (sly-mode . rainbow-delimiters-mode))
@@ -663,12 +664,13 @@ your common lisp implementation installed.
 *** Scheme                                      :lisp:geiser:racket:scheme:
 
 Scheme support, specifically geared towards racket. A SLIME-like interface to racket
-is provided by geiser.
+is provided by racket-mode. A possible implementation independent solution would be geiser.
 
 #+begin_src emacs-lisp
-  (use-package geiser :ensure t
-    :config
-    (setq geiser-active-implementations '(racket)))
+  ;; (use-package geiser :ensure t
+  ;;   :config
+  ;;   (setq geiser-active-implementations '(racket guile chicken)))
+  (use-package racket-mode :ensure t)
 #+end_src
 
 *** Matlab                                            :matlab:math:algebra:
