@@ -326,8 +326,8 @@ Customizes various packages to use a single popup window framework
 
 #+begin_src emacs-lisp
   (use-package posframe :ensure t)
-  ; (use-package flycheck-posframe :ensure t
-  ;  :hook (flycheck-mode . flycheck-posframe-mode))
+  (use-package flycheck-posframe :ensure t
+    :hook (flycheck-mode . flycheck-posframe-mode))
   (use-package company-posframe :ensure t
     :hook (company-mode . company-posframe-mode))
 #+end_src
@@ -377,7 +377,14 @@ A better kind of flymake, Interfaces well with LSP.
 
 #+begin_src emacs-lisp
   (use-package flycheck :ensure t
-    :hook (after-init . global-flycheck-mode)
+    ; :hook (after-init . global-flycheck-mode)
+    :hook
+    (rustic-mode . flycheck-mode)
+    (c++-mode . flycheck-mode)
+    (c-mode . flycheck-mode)
+    (go-mode . flycheck-mode)
+    (emacs-lisp-mode . flycheck-mode)
+    (python-mode . flycheck-mode)
     :config
     (add-to-list 'display-buffer-alist
                  `(,(rx bos "*Flycheck errors*" eos)
