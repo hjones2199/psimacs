@@ -670,7 +670,11 @@ is provided by racket-mode. A possible implementation independent solution would
   ;; (use-package geiser :ensure t
   ;;   :config
   ;;   (setq geiser-active-implementations '(racket guile chicken)))
-  (use-package racket-mode :ensure t)
+  (use-package racket-mode :ensure t
+    :config
+    (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
+    (setq racket-show-functions '(racket-show-echo-area))
+    :hook (racket-mode . racket-xp-mode))
 #+end_src
 
 *** Matlab                                            :matlab:math:algebra:
