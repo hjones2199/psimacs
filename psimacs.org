@@ -123,8 +123,10 @@ On Unix, this directory is located at /tmp.
 Sets up global auto-pairing of parentheses, quotes, brackets etc.
 
 #+begin_src emacs-lisp
-  (add-hook 'after-init-hook 'electric-pair-mode)
-  (add-hook 'after-init-hook 'show-paren-mode)
+  (use-package electric-pair-mode :ensure t
+    :hook
+    (after-init . electric-pair-mode)
+    (after-init . show-paren-mode))
 #+end_src
 
 *** Line numbers
@@ -262,14 +264,14 @@ Treemacs is a project/file explorer sidebar similar to many IDEs. The
 two other packages provide integration with magit and projectile.
 
 #+begin_src emacs-lisp
-(use-package treemacs :ensure t
-  :defer t
-  :config (treemacs-git-mode 'deferred)
-  (progn (setq treemacs-width 30)))
-(use-package treemacs-magit :ensure t
-  :after treemacs magit)
-(use-package treemacs-projectile :ensure t
-  :after treemacs projectile)
+  (use-package treemacs :ensure t :pin melpa-stable
+    :defer t
+    :config (treemacs-git-mode 'deferred)
+    (progn (setq treemacs-width 30)))
+  (use-package treemacs-magit :ensure t :pin melpa-stable
+    :after treemacs magit)
+  (use-package treemacs-projectile :ensure t :pin melpa-stable
+    :after treemacs projectile)
 #+end_src
 
 *** Bar Cursor
@@ -277,8 +279,8 @@ two other packages provide integration with magit and projectile.
 For those of us who think a small bar style cursor is superior to the block.
 
 #+begin_src emacs-lisp
-(use-package bar-cursor :ensure t
-  :config (bar-cursor-mode t))
+  (use-package bar-cursor :ensure t
+    :config (bar-cursor-mode t))
 #+end_src
 
 *** Indentation Guides
@@ -402,7 +404,7 @@ temporary keymaps for debugging, quick navigation, etc. It can optionally
 provide a keymap cheat sheet in the mini-buffer.
 
 #+begin_src emacs-lisp
-(use-package hydra :ensure t)
+  (use-package hydra :ensure t)
 #+end_src
 
 *** God Mode
@@ -414,10 +416,10 @@ in a modal system. For example pressing n moves the cursor downwards
 like C-n would outside of God-mode. I have God-mode bound to escape.
 
 #+begin_src emacs-lisp
-(use-package god-mode :ensure t
-  :bind ("<escape>" . god-mode-all)
-  :config (setq god-exempt-major-modes nil)
-  (setq god-exempt-predicates nil))
+  (use-package god-mode :ensure t
+    :bind ("<escape>" . god-mode-all)
+    :config (setq god-exempt-major-modes nil)
+    (setq god-exempt-predicates nil))
 #+end_src
 
 *** Evil
@@ -543,14 +545,14 @@ eshell which is extremely cool. I currently cant remember why I set
 the transient-values file to the projectile cache.
 
 #+begin_src emacs-lisp
-(use-package magit :ensure t
-  :config
-  (setq transient-values-file
-        (expand-file-name
-         (locate-user-emacs-file ".cache/projectile-cache")))
-  (setq transient-history-file
-        (expand-file-name
-         (locate-user-emacs-file ".cache/projectile-cache"))))
+  (use-package magit :ensure t :pin melpa-stable
+    :config
+    (setq transient-values-file
+          (expand-file-name
+           (locate-user-emacs-file ".cache/projectile-cache")))
+    (setq transient-history-file
+          (expand-file-name
+           (locate-user-emacs-file ".cache/projectile-cache"))))
 #+end_src
 
 *** Projectile
@@ -560,14 +562,14 @@ like LSP automatically detect project roots. It is aware of version
 control which means LSP & dap are also aware of version control.
 
 #+begin_src emacs-lisp
-(use-package projectile :ensure t
-  :config
-  (setq projectile-cache-file
-        (expand-file-name
-         (locate-user-emacs-file ".cache/projectile-cache")))
-  (setq projectile-known-projects-file
-        (expand-file-name
-         (locate-user-emacs-file ".cache/projectile-bookmarks.eld"))))
+  (use-package projectile :ensure t
+    :config
+    (setq projectile-cache-file
+          (expand-file-name
+           (locate-user-emacs-file ".cache/projectile-cache")))
+    (setq projectile-known-projects-file
+          (expand-file-name
+           (locate-user-emacs-file ".cache/projectile-bookmarks.eld"))))
 #+end_src
 
 ** Org Mode
@@ -616,9 +618,9 @@ relatively untested, and more granular configuration might make it easier
 to work with.
 
 #+begin_src emacs-lisp
-(use-package anaconda-mode :ensure t
-  :hook python-mode)
-(use-package pyvenv :ensure t)
+  (use-package anaconda-mode :ensure t
+    :hook python-mode)
+  (use-package pyvenv :ensure t)
 #+end_src
 
 *** Golang                                                      :go:golang:
