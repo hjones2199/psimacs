@@ -678,7 +678,7 @@ is provided by racket-mode. A possible implementation independent solution would
 #+begin_src emacs-lisp
   ;; (use-package geiser :ensure t
   ;;   :config
-  ;;   (setq geiser-active-implementations '(racket guile chicken)))
+  ;;   (setq geiser-active-implementations '(gambit guile chicken)))
   (use-package racket-mode :ensure t
     :config
     (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
