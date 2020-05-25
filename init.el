@@ -20,5 +20,11 @@
       (load psimacs-file)
     (org-babel-load-file (expand-file-name (concat user-emacs-directory "psimacs.org")) t)))
 
+;; Loads user-specific elisp that is not tracked in psimacs' git repo
+(let ((custom-elisp-file (expand-file-name (concat user-emacs-directory "custom-elisp.el"))))
+  (if (file-exists-p custom-elisp-file)
+      (load custom-elisp-file)
+    nil))
+
 (provide 'init)
 ;;; init.el ends here
