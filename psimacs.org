@@ -682,7 +682,7 @@ is provided by racket-mode. A possible implementation independent solution would
   (use-package racket-mode :ensure t
     :config
     (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
-    (setq racket-show-functions '(racket-show-echo-area))
+    (setq racket-show-functions '(racket-show-pseudo-tooltip))
     :hook
     (racket-mode . racket-smart-open-bracket-mode)
     (racket-repl-mode . racket-smart-open-bracket-mode)
