@@ -2,6 +2,7 @@
 *~
 psimacs.el
 custom-elisp.el
+racket-mode
 ./snippets
 recentf
 elpa
