@@ -1,12 +1,12 @@
-;;; package --- Summary
+;;; Init --- Initialization file that loads psimacs
 ;;; Commentary:
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Init file that calls the actual
-;;; configuration/theming from the
-;;; psimacs directory.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Init file that calls the actual configuration/theming from the
+;;; psimacs directory.  Conditionally either loads psimacs.elc or
+;;; retangles psimacs.org and byte compiles it into psimacs.elc.
 ;;; This file is not a part of GNU Emacs
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;; Code:
 ;; Adds psimacs config to the loadpath
