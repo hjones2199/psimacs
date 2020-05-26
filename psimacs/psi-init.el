@@ -9,28 +9,24 @@
 ;; Fixes ELPA handshake bug in Emacs 26
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
-(package-initialize)
-(require 'package)
+;; Straight package manager initialization
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(setq package-archives
-      '(("elpa" . "http://elpa.gnu.org/packages/")
-        ("melpa-stable" . "http://stable.melpa.org/packages/")
-        ("melpa" . "http://melpa.org/packages/")
-        ("org" . "http://orgmode.org/elpa/"))
-      package-archive-priorities
-      '(("melpa-stable" . 5)
-        ("elpa"     . 0)
-        ("melpa"        . 10)
-        ("org" . 8)))
-
-(unless (require 'use-package nil 'noerror)
-  (package-refresh-contents)
-  (package-initialize)
-  (package-install 'use-package)
-  (require 'use-package))
+(straight-use-package 'use-package)
 
 ;; Keeps packages up to date, prompts user to update weekly
-(use-package auto-package-update :ensure t
+(use-package auto-package-update :straight t
   :config
   (setq auto-package-update-delete-old-versions t)
   (setq auto-package-update-prompt-before-update t)
@@ -40,7 +36,7 @@
   (auto-package-update-maybe))
 
 ;; Org-Mode
-(use-package org :ensure org-plus-contrib
+(use-package org
   :config (setq org-hide-emphasis-markers t))
 
 ;; Projects and global tools

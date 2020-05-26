@@ -2,6 +2,7 @@
 *~
 psimacs.el
 custom-elisp.el
+straight
 racket-mode
 ./snippets
 recentf

@@ -11,7 +11,9 @@ To clear user customizations made via the emacs customize GUI, click the
 link below.
 [[elisp:(psimacs-remove-user-cust)][DELETE CUSTOMIZATIONS]]
 
-
+#+begin_src emacs-lisp
+  (require 'bind-key)
+#+end_src
 :Psimacs-reconfig:
 
 #+name: psimacs-regen-conf
@@ -65,7 +67,7 @@ On terminal displays, set the menu color scheme manually.
 
 #+begin_src emacs-lisp :tangle no
   (if (not (display-graphic-p))
-      (set-face-background 'tty-menu-selected-face nil "color-208"))
+  (set-face-background 'tty-menu-selected-face nil "color-208"))
 #+end_src
 
 *** Battery mode
@@ -123,7 +125,7 @@ On Unix, this directory is located at /tmp.
 Sets up global auto-pairing of parentheses, quotes, brackets etc.
 
 #+begin_src emacs-lisp
-  (use-package electric-pair-mode :ensure t
+  (use-package electric-pair-mode
     :hook
     (after-init . electric-pair-mode)
     (after-init . show-paren-mode))
@@ -168,10 +170,10 @@ All-the-icons provides icons that themes can use to replace indicators
 with appropriate icons, for example a branching logo for vcs status.
 
 #+begin_src emacs-lisp
-  (use-package all-the-icons :ensure t)
-  (use-package all-the-icons-dired :ensure t
+  (use-package all-the-icons :straight t)
+  (use-package all-the-icons-dired :straight t
     :hook (dired-mode . all-the-icons-dired-mode))
-  (use-package all-the-icons-ivy :ensure t
+  (use-package all-the-icons-ivy :straight t
     :config
     (all-the-icons-ivy-setup))
 #+end_src
@@ -183,7 +185,7 @@ Emacs a modern, snazzy look. I prefer the doom-vibrant theme but this
 can be easily changed in the load-theme declaration of doom.
 
 #+begin_src emacs-lisp
-  (use-package doom-themes :ensure t
+  (use-package doom-themes :straight t
     :config (load-theme 'doom-vibrant t)
     (doom-themes-org-config)
     :custom-face (org-block ((t (:background "#1B1D26"))))
@@ -195,7 +197,7 @@ can be easily changed in the load-theme declaration of doom.
 Modeline from Doom, has some problems in tty with all-the-icons.
 
 #+begin_src emacs-lisp
-  (use-package doom-modeline :ensure t
+  (use-package doom-modeline :straight t
     :hook (after-init . doom-modeline-mode)
     :config
     (setq doom-modeline-height 22)
@@ -211,7 +213,7 @@ Spacemacs theme is a nice alternative to the doom themes, but I personally prefe
 doom-vibrant.
 
 #+begin_src emacs-lisp :tangle no
-  (use-package spacemacs-theme :ensure t
+  (use-package spacemacs-theme :straight t
     :defer t
     :init (load-theme 'spacemacs-dark t))
 #+end_src
@@ -222,7 +224,7 @@ Dashboard is a start page for Emacs that keeps a list of recent files
 and displays upcoming entries in the org-agenda.
 
 #+begin_src emacs-lisp
-  (use-package dashboard :ensure t
+  (use-package dashboard :straight t
     :config
     (dashboard-setup-startup-hook)
     (setq dashboard-banner-logo-title "Welcome to GNU Emacs")
@@ -245,7 +247,7 @@ Centaur-tabs brings browser-like tabs to Emacs. I personally dont get
 much use out of them but I must admit they are snazzy.
 
 #+begin_src emacs-lisp
-  (use-package centaur-tabs :ensure t
+  (use-package centaur-tabs :straight t
     :config
       (centaur-tabs-headline-match)
     (setq centaur-tabs-set-icons t)
@@ -264,13 +266,13 @@ Treemacs is a project/file explorer sidebar similar to many IDEs. The
 two other packages provide integration with magit and projectile.
 
 #+begin_src emacs-lisp
-  (use-package treemacs :ensure t :pin melpa-stable
+  (use-package treemacs :straight t
     :defer t
     :config (treemacs-git-mode 'deferred)
     (progn (setq treemacs-width 30)))
-  (use-package treemacs-magit :ensure t :pin melpa-stable
+  (use-package treemacs-magit :straight t
     :after treemacs magit)
-  (use-package treemacs-projectile :ensure t :pin melpa-stable
+  (use-package treemacs-projectile :straight t
     :after treemacs projectile)
 #+end_src
 
@@ -279,7 +281,7 @@ two other packages provide integration with magit and projectile.
 For those of us who think a small bar style cursor is superior to the block.
 
 #+begin_src emacs-lisp
-  (use-package bar-cursor :ensure t
+  (use-package bar-cursor :straight t
     :config (bar-cursor-mode t))
 #+end_src
 
@@ -288,7 +290,7 @@ For those of us who think a small bar style cursor is superior to the block.
 Puts indentation guide vertical lines into source code files.
 
 #+begin_src emacs-lisp :tangle no
-  (use-package highlight-indent-guides :ensure t
+  (use-package highlight-indent-guides :straight t
     :config
     (setq highlight-indent-guides-method 'character)
     :hook
@@ -300,7 +302,7 @@ Puts indentation guide vertical lines into source code files.
 Highlights uncommitted & unsaved lines in the lefthand fringe
 
 #+begin_src emacs-lisp
-  (use-package diff-hl :ensure t
+  (use-package diff-hl :straight t
     :config (global-diff-hl-mode)
     :hook (prog-mode . diff-hl-flydiff-mode)
     (fundemental-mode . diff-hl-flydiff-mode)
@@ -312,7 +314,7 @@ Highlights uncommitted & unsaved lines in the lefthand fringe
 Colorizes matching parentheses for easier parsing by humans.
 
 #+begin_src emacs-lisp
-  (use-package rainbow-delimiters :ensure t
+  (use-package rainbow-delimiters :straight t
     :hook
     (emacs-lisp-mode . rainbow-delimiters-mode)
     (racket-mode . rainbow-delimiters-mode)
@@ -327,10 +329,10 @@ Colorizes matching parentheses for easier parsing by humans.
 Customizes various packages to use a single popup window framework
 
 #+begin_src emacs-lisp
-  (use-package posframe :ensure t)
-  (use-package flycheck-posframe :ensure t
+  (use-package posframe :straight t)
+  (use-package flycheck-posframe :straight t
     :hook (flycheck-mode . flycheck-posframe-mode))
-  (use-package company-posframe :ensure t
+  (use-package company-posframe :straight t
     :hook (company-mode . company-posframe-mode))
 #+end_src
 
@@ -341,7 +343,7 @@ Ivy is a regex based replacement for the emacs C-f and M-x commands that
 saves many keystrokes with its predictive abilities.
 
 #+begin_src emacs-lisp
-  (use-package ivy :ensure t :diminish
+  (use-package ivy :straight t :diminish
     :config (ivy-mode t)
     (setq ivy-use-selectable-prompt t))
 #+end_src
@@ -355,7 +357,7 @@ mode globally in the use-package block, you replace the emacs commands
 with their counsel equivalents.
 
 #+begin_src emacs-lisp
-(use-package counsel :ensure t :diminish
+(use-package counsel :straight t :diminish
   :config (counsel-mode t))
 #+end_src
 
@@ -366,7 +368,7 @@ the built in isearch, and in my configuration I replaced the C-s
 keybinding with swiper.
 
 #+begin_src emacs-lisp
-  (use-package swiper :ensure t :diminish
+  (use-package swiper :straight t :diminish
     :bind ("C-s" . swiper-isearch) ("C-r" . swiper-isearch-backward)
     :custom-face
     (swiper-line-face
@@ -378,7 +380,7 @@ keybinding with swiper.
 A better kind of flymake, Interfaces well with LSP.
 
 #+begin_src emacs-lisp
-  (use-package flycheck :ensure t
+  (use-package flycheck :straight t
     ; :hook (after-init . global-flycheck-mode)
     :hook
     (rustic-mode . flycheck-mode)
@@ -404,7 +406,7 @@ temporary keymaps for debugging, quick navigation, etc. It can optionally
 provide a keymap cheat sheet in the mini-buffer.
 
 #+begin_src emacs-lisp
-  (use-package hydra :ensure t)
+  (use-package hydra :straight t)
 #+end_src
 
 *** God Mode
@@ -416,7 +418,7 @@ in a modal system. For example pressing n moves the cursor downwards
 like C-n would outside of God-mode. I have God-mode bound to escape.
 
 #+begin_src emacs-lisp
-  (use-package god-mode :ensure t
+  (use-package god-mode :straight t
     :bind ("<escape>" . god-mode-all)
     :config (setq god-exempt-major-modes nil)
     (setq god-exempt-predicates nil))
@@ -435,7 +437,7 @@ Might want to try the packages below too:
 - evil-ediff
 
 #+begin_src emacs-lisp :tangle no
-  (use-package evil :ensure t
+  (use-package evil :straight t
     :config
     (setq evil-emacs-state-modes nil)
     (setq evil-insert-state-modes nil)
@@ -455,7 +457,7 @@ Ryo. I basically just want vim nav keys along with some emacs commands
 without their prefix.
 
 #+begin_src emacs-lisp :tangle no
-  (use-package ryo-modal :ensure t
+  (use-package ryo-modal :straight t
     :commands ryo-modal-mode
     :bind ("<escape>" . ryo-modal-mode)
     :config
@@ -526,7 +528,7 @@ custom functions can be found in there as well.
   (use-package eshell)
   (use-package psishell
     :config (psiprompt-initialize))
-  (use-package eshell-toggle :ensure t :defer t
+  (use-package eshell-toggle :straight t :defer t
     :custom
     (eshell-toggle-size-fraction 3)
     (eshell-toggle-use-projectile-root t)
@@ -545,7 +547,7 @@ eshell which is extremely cool. I currently cant remember why I set
 the transient-values file to the projectile cache.
 
 #+begin_src emacs-lisp
-  (use-package magit :ensure t :pin melpa-stable
+  (use-package magit :straight t
     :config
     (setq transient-values-file
           (expand-file-name
@@ -562,7 +564,7 @@ like LSP automatically detect project roots. It is aware of version
 control which means LSP & dap are also aware of version control.
 
 #+begin_src emacs-lisp
-  (use-package projectile :ensure t
+  (use-package projectile :straight t
     :config
     (setq projectile-cache-file
           (expand-file-name
@@ -580,7 +582,7 @@ removed if you prefer asterisk's over bullets for org headings. Heading-based
 indentation can be disabled by removing the org-indent-mode hook.
 
 #+begin_src emacs-lisp
-  (use-package org-bullets :ensure t
+  (use-package org-bullets :straight t
     :hook
     (org-mode . org-bullets-mode)
     (org-mode . org-indent-mode)
@@ -618,9 +620,9 @@ relatively untested, and more granular configuration might make it easier
 to work with.
 
 #+begin_src emacs-lisp
-  (use-package anaconda-mode :ensure t
+  (use-package anaconda-mode :straight t
     :hook python-mode)
-  (use-package pyvenv :ensure t)
+  (use-package pyvenv :straight t)
 #+end_src
 
 *** Golang                                                      :go:golang:
@@ -629,9 +631,9 @@ Go syntax highlighting & snippets. Additional support for semantic
 auto-completion and debugging is provided by lsp and dap elsewhere.
 
 #+begin_src emacs-lisp
-  (use-package go-mode :ensure t
+  (use-package go-mode :straight t
     :hook (go-mode . lsp))
-  (use-package go-snippets :ensure t
+  (use-package go-snippets :straight t
     :after yasnippet)
 #+end_src
 
@@ -643,7 +645,7 @@ configuration for emacs. Note: Must install rust-src component from rustup
 for completion and lsp-ui documentation to work correctly.
 
 #+begin_src emacs-lisp
-  (use-package rustic :ensure t
+  (use-package rustic :straight t
     :config
     (setq rustic-flycheck-setup-mode-line-p nil))
 #+end_src
@@ -656,15 +658,15 @@ sblc binary location for inferior-lisp-program, point it to wherever you have
 your common lisp implementation installed.
 
 #+begin_src emacs-lisp :tangle no
-(use-package slime :ensure t :defer
+(use-package slime :straight t :defer
   :config
   (setq inferior-lisp-program "sbcl")
   (add-to-list 'slime-contribs 'slime-fancy))
-(use-package slime-company :ensure t :after slime company)
+(use-package slime-company :straight t :after slime company)
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package sly :ensure t
+  (use-package sly :straight t
     :config
     (setq org-babel-lisp-eval-fn #'sly-eval)
     (setq inferior-lisp-program "sbcl"))
@@ -676,10 +678,10 @@ Scheme support, specifically geared towards racket. A SLIME-like interface to ra
 is provided by racket-mode. A possible implementation independent solution would be geiser.
 
 #+begin_src emacs-lisp
-  ;; (use-package geiser :ensure t
+  ;; (use-package geiser :straight t
   ;;   :config
   ;;   (setq geiser-active-implementations '(gambit guile chicken)))
-  (use-package racket-mode :ensure t
+  (use-package racket-mode :straight t
     :config
     (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
     (setq racket-show-functions '(racket-show-pseudo-tooltip))
@@ -697,7 +699,7 @@ the users $PATH environmental variable. This approach is reportedy specific to
 Unix-like OS's and a different method has to be used on Win32.
 
 #+begin_src emacs-lisp :tangle no
-  (use-package matlab-mode :ensure t
+  (use-package matlab-mode :straight t
     :config
     (setq matlab-indent-function t)
     (setq matlab-shell-command "matlab")
@@ -729,7 +731,7 @@ refuse to close.
 Provides a mode for editing Nix configuration files.
 
 #+begin_src emacs-lisp
-  (use-package nix-mode :ensure t)
+  (use-package nix-mode :straight t)
 #+end_src
 
 *** Yaml
@@ -737,7 +739,7 @@ Provides a mode for editing Nix configuration files.
 Provides a mode for yaml files
 
 #+begin_src emacs-lisp
-  (use-package yaml-mode :ensure t)
+  (use-package yaml-mode :straight t)
 #+end_src
 
 ** Misc Development
@@ -747,11 +749,11 @@ Yasnippet provides auto-complete code snippets that can be made/enabled
 on a language specific basis.
 
 #+begin_src emacs-lisp
-  (use-package yasnippet :ensure t
+  (use-package yasnippet :straight t
     :config
     (push (locate-user-emacs-file "psimacs/snippets") yas-snippet-dirs)
     (yas-global-mode 1))
-  (use-package yasnippet-snippets :ensure t)
+  (use-package yasnippet-snippets :straight t)
 #+end_src
 
 Company acts as an intellisense-like autocomplete front end for the various
@@ -760,13 +762,13 @@ for different kinds of completions that make it easier to visually parse
 the completion list.
 
 #+begin_src emacs-lisp
-(use-package company :ensure t :diminish
+(use-package company :straight t :diminish
   :defer 2
   :custom
   (company-minimum-prefix-length 2)
   (company-tooltip-align-annotations 't)
   (global-company-mode t))
-(use-package company-box :ensure t
+(use-package company-box :straight t
   :after company
   :diminish
   :hook (company-mode . company-box-mode))
@@ -784,8 +786,7 @@ different configuration area. The clangd executable should be configurable
 later as well.
 
 #+begin_src emacs-lisp
-  (use-package lsp-mode :ensure t
-    ; :pin melpa-stable
+  (use-package lsp-mode :straight t
     :hook (c-mode . lsp) (c++-mode . lsp)
     :commands lsp
     :config
@@ -793,16 +794,16 @@ later as well.
     (setq lsp-clients-clangd-executable "clangd")
     (setq lsp-session-file (expand-file-name
                             (locate-user-emacs-file ".cache/lsp-session"))))
-  (use-package lsp-ui :ensure t
+  (use-package lsp-ui :straight t
     :hook (lsp-mode . lsp-ui-mode)
     :config (setq lsp-ui-peek-always-show t)
     :bind ("M-+" . lsp-ui-peek-find-definitions))
-  (use-package company-lsp :ensure t
+  (use-package company-lsp :straight t
     :commands company-lsp)
-  (use-package origami :ensure t
+  (use-package origami :straight t
     :config (global-origami-mode)
     :bind ("C-c f" . origami-forward-toggle-node))
-  (use-package lsp-origami :ensure t)
+  (use-package lsp-origami :straight t)
 #+end_src
 
 *** Debugging                                                   :dap:debug:
@@ -811,7 +812,7 @@ IDE-like debugging support is provided by the dap-mode package. For
 now, the dap languages are specified here in the use-package declaration.
 
 #+begin_src emacs-lisp
-  (use-package dap-mode :ensure t
+  (use-package dap-mode :straight t
     :config (tooltip-mode 1) (dap-mode 1)
     (dap-ui-mode 1) (dap-tooltip-mode 1)
     (require 'dap-go) (require 'dap-gdb-lldb) (require 'dap-python)
