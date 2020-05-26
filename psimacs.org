@@ -689,6 +689,11 @@ is provided by racket-mode. A possible implementation independent solution would
     (racket-mode . racket-smart-open-bracket-mode)
     (racket-repl-mode . racket-smart-open-bracket-mode)
     (racket-mode . racket-xp-mode))
+  (use-package ob-racket
+    :straight
+    (:host github :repo "DEADB17/ob-racket")
+    :config
+    (append '((racket . t) (scribble . t)) org-babel-load-languages))
 #+end_src
 
 *** Matlab                                            :matlab:math:algebra:
