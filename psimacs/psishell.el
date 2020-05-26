@@ -1,3 +1,4 @@
+;; -*- lexical-binding:t -*-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; This file is not a part of GNU Emacs ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -29,7 +30,6 @@
            (propertize " " 'face `(:foreground "white"))))))
 
 
-
 (defun eshell/open (arg1 &optional arg2)
   "Opens a file in a new emacs buffer"
   (if (string= arg1 "-f") ; Opens in another frame
@@ -43,7 +43,8 @@
 (defun eshell/reshell ()
   "Replace buffer with a fresh eshell buffer"
   (kill-buffer "*eshell*")
-  (eshell))
+  (switch-to-buffer "*eshell*")
+  (eshell-mode))
 
 ;;(define-minor-mode psishell-mode
 ;;  "Activates psishell"
