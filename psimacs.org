@@ -525,11 +525,17 @@ package. Most of these are visual changes, but a few minor aliases and
 custom functions can be found in there as well.
 
 #+begin_src emacs-lisp
-  (use-package eshell)
+  (use-package eshell
+    :hook
+    (eshell-mode
+     . #'(lambda () ((define-key eshell-mode-map
+                       [remap eshell-pcomplete] 'completion-at-point)))))
   (use-package psishell
     :config (psiprompt-initialize))
-  (use-package aweshell :after psishell
-    :straight (:host github :repo "hjones2199/aweshell"))
+  (use-package esh-autosuggest :straight t
+    :hook (eshell-mode . esh-autosuggest-mode))
+  ;; (use-package aweshell :after psishell
+  ;;   :straight (:host github :repo "hjones2199/aweshell"))
   (use-package eshell-toggle :straight t :defer t
     :custom
     (eshell-toggle-size-fraction 3)
