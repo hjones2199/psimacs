@@ -47,6 +47,14 @@
   (eshell-mode)
   (eshell/clear 1))
 
+(defun setup-eshell-ivy-completion ()
+  (define-key eshell-mode-map [remap eshell-pcomplete] 'completion-at-point)
+  ;; only if you want to use the minibuffer for completions instead of the
+  ;; in-buffer interface
+  (setq-local ivy-display-functions-alist
+              (remq (assoc 'ivy-completion-in-region ivy-display-functions-alist)
+                    ivy-display-functions-alist)))
+
 ;;(define-minor-mode psishell-mode
 ;;  "Activates psishell"
 ;;  (psiprompt-initialize))
