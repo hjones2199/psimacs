@@ -25,16 +25,6 @@
 
 (straight-use-package 'use-package)
 
-;; Keeps packages up to date, prompts user to update weekly
-(use-package auto-package-update :straight t
-  :config
-  (setq auto-package-update-delete-old-versions t)
-  (setq auto-package-update-prompt-before-update t)
-  (setq auto-package-update-last-update-day-path
-        (expand-file-name
-         (locate-user-emacs-file ".cache/last-package-update-day")))
-  (auto-package-update-maybe))
-
 ;; Org-Mode
 (use-package org
   :config (setq org-hide-emphasis-markers t))
