@@ -375,6 +375,15 @@ keybinding with swiper.
      ((t (:foreground "#1c1f24" :background "dim gray")))))
 #+end_src
 
+*** Ripgrep
+
+Ripgrep emacs package is a magit-like frontend to the grep replacement "rg".
+
+#+begin_src emacs-lisp
+  (use-package rg :straight t
+    :config (rg-enable-default-bindings))
+#+end_src
+
 *** Flycheck
 
 A better kind of flymake, Interfaces well with LSP.
@@ -531,8 +540,9 @@ custom functions can be found in there as well.
   (use-package psishell
     :config (psiprompt-initialize))
   (use-package esh-autosuggest :straight t
-    :hook (eshell-mode . esh-autosuggest-mode))
-    ;; :bind ("C-e" . (lambda () (esh-autosuggest-complete-word) (end-of-line))))
+    :hook
+    (eshell-mode . esh-autosuggest-mode))
+    ;; (esh-autosuggest-mode . #'(lambda () (unbind-key "RET" company-active-map))))
   (use-package eshell-toggle :straight t :defer t
     :custom
     (eshell-toggle-size-fraction 3)
