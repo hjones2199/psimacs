@@ -735,16 +735,13 @@ The /--line-editing/ argument is a workaround for a bug where QT plot windows
 refuse to close.
 
 #+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
-  (setq inferior-octave-startup-args '("-i" "--line-editing"))
-
-  (add-hook 'octave-mode-hook
-            (lambda ()
-              (abbrev-mode 1)
-              (auto-fill-mode 1)
-              (if (eq window-system 'x)
-                  (font-lock-mode 1))))
-
+  (use-package octave
+    :hook
+    (octave-mode . (lambda () (abbrev-mode 1) (auto-fill-mode 1)
+                     (if (eq window-system 'x) (font-lock-mode 1))))
+    :config
+    (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+    (setq inferior-octave-startup-args '("-i" "--line-editing")))
 #+end_src
 
 *** Nix
