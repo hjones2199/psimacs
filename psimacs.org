@@ -554,6 +554,11 @@ custom functions can be found in there as well.
     ("<f12>" . eshell-toggle))
 #+end_src
 
+*** Vterm
+
+#+begin_src emacs-lisp
+  (use-package vterm :straight t)
+#+end_src
 ** Projects and VCS
 *** Magit
 
@@ -694,9 +699,9 @@ Scheme support, specifically geared towards racket. A SLIME-like interface to ra
 is provided by racket-mode. A possible implementation independent solution would be geiser.
 
 #+begin_src emacs-lisp
-  ;; (use-package geiser :straight t
-  ;;   :config
-  ;;   (setq geiser-active-implementations '(gambit guile chicken)))
+  (use-package geiser :straight t
+    :config
+    (setq geiser-active-implementations '(gerbil gambit guile chicken)))
   (use-package racket-mode :straight t
     :config
     (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
