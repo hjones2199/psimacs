@@ -556,9 +556,12 @@ custom functions can be found in there as well.
 
 *** Vterm
 
-#+begin_src emacs-lisp
+Emacs must be compiled with module support to use libvterm, so disabled by default.
+
+#+begin_src emacs-lisp :tangle no
   (use-package vterm :straight t)
 #+end_src
+
 ** Projects and VCS
 *** Magit
 
