@@ -150,6 +150,21 @@ Sets default tab indent to be three space characters.
   (setq-default tab-width 3)
 #+end_src
 
+*** Alert bell
+
+Disables the alert bell completely.
+
+#+begin_src emacs-lisp
+  (setq ring-bell-function 'ignore)
+#+end_src
+
+*** Bookmarks
+
+#+begin_src emacs-lisp
+  (setq bookmark-default-file
+        (expand-file-name (locate-user-emacs-file ".cache/bookmarks")))
+#+end_src
+
 * Packages
 
 Installs external packages, and configures both baseline and external packages.
@@ -788,16 +803,13 @@ for different kinds of completions that make it easier to visually parse
 the completion list.
 
 #+begin_src emacs-lisp
-(use-package company :straight t :diminish
-  :defer 2
-  :custom
-  (company-minimum-prefix-length 2)
-  (company-tooltip-align-annotations 't)
-  (global-company-mode t))
-(use-package company-box :straight t
-  :after company
-  :diminish
-  :hook (company-mode . company-box-mode))
+  (use-package company :straight t :diminish
+    :config
+    (global-company-mode t))
+  (use-package company-box :straight t
+    :after company
+    :diminish
+    :hook (company-mode . company-box-mode))
 #+end_src
 
 The *Language Server Protocol* is an editor-agnostic code parsing/analysis
