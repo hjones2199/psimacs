@@ -363,6 +363,17 @@ saves many keystrokes with its predictive abilities.
     (setq ivy-use-selectable-prompt t))
 #+end_src
 
+Add support for using ivy instead of dedicated buffer for 
+xref (jump to definition) results.
+
+#+begin_src emacs-lisp
+  (use-package ivy-xref :straight t
+    :init
+    (when (>= emacs-major-version 27)
+      (setq xref-show-definitions-function #'ivy-xref-show-defs))
+    (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+#+end_src
+
 *** Counsel
 
 Counsel-mode replaces many built in Emacs interactive functions with
