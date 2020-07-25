@@ -184,7 +184,7 @@ be used without restarting Emacs after a package update.
 All-the-icons provides icons that themes can use to replace indicators
 with appropriate icons, for example a branching logo for vcs status.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package all-the-icons :straight t)
   (use-package all-the-icons-dired :straight t
     :hook (dired-mode . all-the-icons-dired-mode))
@@ -199,7 +199,7 @@ Doom-themes and doom-modeline are beautiful theme frameworks that give
 Emacs a modern, snazzy look. I prefer the doom-vibrant theme but this
 can be easily changed in the load-theme declaration of doom.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package doom-themes :straight t
     :config (load-theme 'doom-vibrant t)
     (doom-themes-org-config)
@@ -211,13 +211,20 @@ can be easily changed in the load-theme declaration of doom.
 
 Modeline from Doom, has some problems in tty with all-the-icons.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package doom-modeline :straight t
     :hook (after-init . doom-modeline-mode)
     :config
     (setq doom-modeline-height 22)
     (setq find-file-visit-truename t)
     (setq doom-modeline-unicode-fallback t))
+#+end_src
+
+*** Dracula Theme
+
+#+begin_src emacs-lisp :tangle no
+  (use-package dracula-theme :straight t
+    :config (load-theme 'dracula t))
 #+end_src
 
 *** Spacemacs Theme
@@ -227,10 +234,17 @@ Modeline from Doom, has some problems in tty with all-the-icons.
 Spacemacs theme is a nice alternative to the doom themes, but I personally prefer
 doom-vibrant.
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
   (use-package spacemacs-theme :straight t
     :defer t
-    :init (load-theme 'spacemacs-dark t))
+    :init
+    (load-theme 'spacemacs-dark t))
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package spaceline :straight t
+    :config
+    (spaceline-emacs-theme))
 #+end_src
 
 *** Dashboard                                       :dash:startpage:recent:
@@ -261,7 +275,7 @@ and displays upcoming entries in the org-agenda.
 Centaur-tabs brings browser-like tabs to Emacs. I personally dont get
 much use out of them but I must admit they are snazzy.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package centaur-tabs :straight t
     :config
       (centaur-tabs-headline-match)
@@ -280,7 +294,7 @@ Another neat visual package I personally dont get much use out of.
 Treemacs is a project/file explorer sidebar similar to many IDEs. The
 two other packages provide integration with magit and projectile.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package treemacs :straight t
     :defer t
     :config (treemacs-git-mode 'deferred)
@@ -343,7 +357,7 @@ Colorizes matching parentheses for easier parsing by humans.
 
 Customizes various packages to use a single popup window framework
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package posframe :straight t)
   (use-package flycheck-posframe :if window-system :straight t
     :hook (flycheck-mode . flycheck-posframe-mode))
@@ -405,7 +419,7 @@ keybinding with swiper.
 
 Ripgrep emacs package is a magit-like frontend to the grep replacement "rg".
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package rg :straight t
     :config (rg-enable-default-bindings))
 #+end_src
@@ -414,7 +428,7 @@ Ripgrep emacs package is a magit-like frontend to the grep replacement "rg".
 
 A better kind of flymake, Interfaces well with LSP.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package flycheck :straight t
     ; :hook (after-init . global-flycheck-mode)
     :hook
@@ -669,7 +683,7 @@ different virtual environments inside of emacs. Overall my python setup is
 relatively untested, and more granular configuration might make it easier
 to work with.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package anaconda-mode :straight t
     :hook python-mode)
   (use-package pyvenv :straight t)
@@ -680,7 +694,7 @@ to work with.
 Go syntax highlighting & snippets. Additional support for semantic
 auto-completion and debugging is provided by lsp and dap elsewhere.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package go-mode :straight t
     :hook (go-mode . lsp))
   (use-package go-snippets :straight t
@@ -694,7 +708,7 @@ the rust project. Rustic is a third party, more actively developed Rust
 configuration for emacs. Note: Must install rust-src component from rustup
 for completion and lsp-ui documentation to work correctly.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package rustic :straight t
     :config
     (setq rustic-flycheck-setup-mode-line-p nil))
@@ -715,7 +729,7 @@ your common lisp implementation installed.
 (use-package slime-company :straight t :after slime company)
 #+end_src
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package sly :straight t
     :config
     (setq org-babel-lisp-eval-fn #'sly-eval)
@@ -727,7 +741,7 @@ your common lisp implementation installed.
 Scheme support, specifically geared towards racket. A SLIME-like interface to racket
 is provided by racket-mode. A possible implementation independent solution would be geiser.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package geiser :straight t
     :config
     (setq geiser-active-implementations '(gerbil gambit guile chicken)))
@@ -768,7 +782,7 @@ the matlab mode at the moment, probably just the way I have it configured.
 The /--line-editing/ argument is a workaround for a bug where QT plot windows
 refuse to close.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package octave
     :hook
     (octave-mode . (lambda () (abbrev-mode 1) (auto-fill-mode 1)
@@ -782,7 +796,7 @@ refuse to close.
 
 Provides a mode for editing Nix configuration files.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package nix-mode :straight t)
 #+end_src
 
@@ -790,7 +804,7 @@ Provides a mode for editing Nix configuration files.
 
 Provides a mode for yaml files
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package yaml-mode :straight t)
 #+end_src
 
@@ -800,7 +814,7 @@ Provides a mode for yaml files
 Yasnippet provides auto-complete code snippets that can be made/enabled
 on a language specific basis.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package yasnippet :straight t
     :config
     (push (locate-user-emacs-file "psimacs/snippets") yas-snippet-dirs)
@@ -813,7 +827,7 @@ language specific completion engines in emacs. Company-box provides logos
 for different kinds of completions that make it easier to visually parse
 the completion list.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package company :straight t :diminish
     :config
     (global-company-mode t))
@@ -834,7 +848,7 @@ Later on, I will move the C and C++ specific LSP configuration out into a
 different configuration area. The clangd executable should be configurable
 later as well.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package lsp-mode :straight t
     :hook (c-mode . lsp) (c++-mode . lsp)
     :commands lsp
@@ -860,7 +874,7 @@ later as well.
 IDE-like debugging support is provided by the dap-mode package. For
 now, the dap languages are specified here in the use-package declaration.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package dap-mode :straight t
     :config (tooltip-mode 1) (dap-mode 1)
     (dap-ui-mode 1) (dap-tooltip-mode 1)
