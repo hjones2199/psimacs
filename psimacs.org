@@ -199,7 +199,7 @@ Doom-themes and doom-modeline are beautiful theme frameworks that give
 Emacs a modern, snazzy look. I prefer the doom-vibrant theme but this
 can be easily changed in the load-theme declaration of doom.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package doom-themes :straight t
     :config (load-theme 'doom-vibrant t)
     (doom-themes-org-config)
@@ -222,15 +222,20 @@ Modeline from Doom, has some problems in tty with all-the-icons.
 
 *** Spacemacs Theme
 
-- DISABLED
-
 Spacemacs theme is a nice alternative to the doom themes, but I personally prefer
 doom-vibrant.
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
+  (custom-set-variables '(spacemacs-theme-custom-colors
+                          '((comment-bg . nil))))
+
   (use-package spacemacs-theme :straight t
     :defer t
     :init (load-theme 'spacemacs-dark t))
+
+  (add-hook 'text-mode-hook 'hl-line-mode)
+  (add-hook 'prog-mode-hook 'hl-line-mode)
+  (fringe-mode '(2 . 2))
 #+end_src
 
 *** Dashboard                                       :dash:startpage:recent:
@@ -261,7 +266,7 @@ and displays upcoming entries in the org-agenda.
 Centaur-tabs brings browser-like tabs to Emacs. I personally dont get
 much use out of them but I must admit they are snazzy.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package centaur-tabs :straight t
     :config
       (centaur-tabs-headline-match)
@@ -345,8 +350,6 @@ Customizes various packages to use a single popup window framework
 
 #+begin_src emacs-lisp
   (use-package posframe :straight t)
-  (use-package flycheck-posframe :if window-system :straight t
-    :hook (flycheck-mode . flycheck-posframe-mode))
   (use-package company-posframe :straight t
     :hook (company-mode . company-posframe-mode))
 #+end_src
@@ -383,8 +386,8 @@ mode globally in the use-package block, you replace the emacs commands
 with their counsel equivalents.
 
 #+begin_src emacs-lisp
-(use-package counsel :straight t :diminish
-  :config (counsel-mode t))
+  (use-package counsel :straight t :diminish
+    :config (counsel-mode t))
 #+end_src
 
 *** Swiper
@@ -543,11 +546,11 @@ systems. It treats remote file systems, or different users on the
 same system, as a single logical system.
 
 #+begin_src emacs-lisp
-(use-package tramp
-  :config  (setq tramp-default-method "ssh")
-  (setq tramp-persistency-file-name
-        (expand-file-name
-         (locate-user-emacs-file ".cache/tramp"))))
+  (use-package tramp
+    :config  (setq tramp-default-method "ssh")
+    (setq tramp-persistency-file-name
+          (expand-file-name
+           (locate-user-emacs-file ".cache/tramp"))))
 #+end_src
 
 *** Eshell
@@ -708,11 +711,11 @@ sblc binary location for inferior-lisp-program, point it to wherever you have
 your common lisp implementation installed.
 
 #+begin_src emacs-lisp :tangle no
-(use-package slime :straight t :defer
-  :config
-  (setq inferior-lisp-program "sbcl")
-  (add-to-list 'slime-contribs 'slime-fancy))
-(use-package slime-company :straight t :after slime company)
+  (use-package slime :straight t :defer
+    :config
+    (setq inferior-lisp-program "sbcl")
+    (add-to-list 'slime-contribs 'slime-fancy))
+  (use-package slime-company :straight t :after slime company)
 #+end_src
 
 #+begin_src emacs-lisp
