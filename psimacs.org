@@ -797,6 +797,16 @@ Provides a mode for yaml files
   (use-package yaml-mode :straight t)
 #+end_src
 
+** Devops
+*** Containers
+
+Support for Podman/Docker container tech, including relevant file types.
+
+#+begin_src emacs-lisp
+  (use-package dockerfile-mode :straight t)
+  (use-package docker-compose-mode :straight t)
+#+end_src
+
 ** Misc Development
 *** Code Completion                              :lsp:company:intellisense:
 
