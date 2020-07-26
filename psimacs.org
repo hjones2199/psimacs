@@ -136,9 +136,11 @@ Sets up global auto-pairing of parentheses, quotes, brackets etc.
 Global line numbers on all programming, text, and org buffers.
 
 #+begin_src emacs-lisp
-  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-  (add-hook 'text-mode-hook 'display-line-numbers-mode)
-  (add-hook 'org-mode-hook 'display-line-numbers-mode)
+  (use-package display-line-numbers-mode
+    :hook
+    (prog-mode . display-line-numbers-mode)
+    (text-mode . display-line-numbers-mode)
+    (org-mode . display-line-numbers-mode))
 #+end_src
 
 *** Tabs vs spaces
