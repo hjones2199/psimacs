@@ -140,6 +140,7 @@ Global line numbers on all programming, text, and org buffers.
     :hook
     (prog-mode . display-line-numbers-mode)
     (text-mode . display-line-numbers-mode)
+    (conf-mode . display-line-numbers-mode)
     (org-mode . display-line-numbers-mode))
 #+end_src
 
