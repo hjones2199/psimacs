@@ -194,6 +194,10 @@ with appropriate icons, for example a branching logo for vcs status.
   (use-package all-the-icons-ivy :straight t
     :config
     (all-the-icons-ivy-setup))
+  (use-package treemacs-all-the-icons :straight t
+    :after treemacs all-the-icons
+    :config
+    (treemacs-load-theme "all-the-icons"))
 #+end_src
 
 *** Doom Theme
@@ -234,7 +238,8 @@ doom-vibrant.
 
   (use-package spacemacs-theme :straight t
     :defer t
-    :init (load-theme 'spacemacs-dark t))
+    :init (load-theme 'spacemacs-dark t)
+    :custom-face (fringe ((t (:background "#212026")))))
 
   (add-hook 'text-mode-hook 'hl-line-mode)
   (add-hook 'prog-mode-hook 'hl-line-mode)
@@ -312,7 +317,7 @@ For those of us who think a small bar style cursor is superior to the block.
 
 Puts indentation guide vertical lines into source code files.
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
   (use-package highlight-indent-guides :straight t
     :config
     (setq highlight-indent-guides-method 'character)
