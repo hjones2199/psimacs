@@ -15,13 +15,16 @@
 
 ;; Loads the psimacs configuration, tangling and compiling the
 ;; file if it does not exist.
-(let ((psimacs-file (expand-file-name (concat user-emacs-directory "psimacs.elc"))))
+(let ((psimacs-file
+       (expand-file-name (concat user-emacs-directory "psimacs.elc"))))
   (if (file-exists-p psimacs-file)
       (load psimacs-file)
-    (org-babel-load-file (expand-file-name (concat user-emacs-directory "psimacs.org")) t)))
+    (org-babel-load-file
+     (expand-file-name (concat user-emacs-directory "psimacs.org")) t)))
 
 ;; Loads user-specific elisp that is not tracked in psimacs' git repo
-(let ((custom-elisp-file (expand-file-name (concat user-emacs-directory "custom-elisp.el"))))
+(let ((custom-elisp-file
+       (expand-file-name (concat user-emacs-directory "custom-elisp.el"))))
   (if (file-exists-p custom-elisp-file)
       (load custom-elisp-file)
     nil))

@@ -317,7 +317,7 @@ For those of us who think a small bar style cursor is superior to the block.
 
 Puts indentation guide vertical lines into source code files.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package highlight-indent-guides :straight t
     :config
     (setq highlight-indent-guides-method 'character)
