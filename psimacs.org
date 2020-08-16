@@ -882,14 +882,22 @@ now, the dap languages are specified here in the use-package declaration.
 
 #+begin_src emacs-lisp
   (use-package dap-mode :straight t
-    :config (tooltip-mode 1) (dap-mode 1)
-    (dap-ui-mode 1) (dap-tooltip-mode 1)
-    (require 'dap-go) (require 'dap-gdb-lldb) (require 'dap-python)
+    :hook
+    (c-mode . dap-mode)
+    (c++-mode . dap-mode)
+    (rustic-mode . dap-mode)
+    (go-mode . dap-mode)
+    :config
+    (setq dap-auto-configure-features '(locals controls tooltip))
     (setq dap-breakpoints-file
           (expand-file-name (locate-user-emacs-file ".cache/dap-breakpoints")))
-    :bind (:map dap-mode-map ("<f5>" . dap-debug))
-    ("C-c b" . dap-breakpoint-toggle)
-    ("C-c n" . dap-continue))
+    :bind
+    (:map dap-mode-map
+          ("<f5>" . dap-debug)
+          ("C-<f5>" . dap-hydra)))
+
+  (use-package dap-gdb-lldb)
+  (use-package dap-go)
 #+end_src
 
 *** Build Systems
