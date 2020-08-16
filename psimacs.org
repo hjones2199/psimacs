@@ -846,10 +846,9 @@ the completion list.
 
 The *Language Server Protocol* is an editor-agnostic code parsing/analysis
 protocol that editors can use to communicate with code completion engines.
-The lsp-mode Emacs package is an implementation of this protocol, and the
-company-lsp package passes this language data to the company-mode front end.
-Origami is an Emacs package that provides code folding, and lsp-origami
-provides origami with language specific code folding configuration.
+The lsp-mode Emacs package is an implementation of this protocol. Origami
+is an Emacs package that provides code folding, and lsp-origami provides
+origami with language specific code folding configuration.
 
 Later on, I will move the C and C++ specific LSP configuration out into a
 different configuration area. The clangd executable should be configurable
@@ -868,8 +867,8 @@ later as well.
     :hook (lsp-mode . lsp-ui-mode)
     :config (setq lsp-ui-peek-always-show t)
     :bind ("M-+" . lsp-ui-peek-find-definitions))
-  (use-package company-lsp :straight t
-    :commands company-lsp)
+  ;; (use-package company-lsp :straight t
+  ;;   :commands company-lsp)
   (use-package origami :straight t
     :config (global-origami-mode)
     :bind ("C-c f" . origami-forward-toggle-node))
@@ -893,3 +892,11 @@ now, the dap languages are specified here in the use-package declaration.
     ("C-c n" . dap-continue))
 #+end_src
 
+*** Build Systems
+
+Meson and Ninja are modern analogues to Autotools & Make respectively.
+
+#+begin_src emacs-lisp
+  (use-package meson-mode :straight t)
+  (use-package ninja-mode :straight t)
+#+end_src
