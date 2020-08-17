@@ -197,7 +197,9 @@ with appropriate icons, for example a branching logo for vcs status.
   ;;   (all-the-icons-ivy-setup))
 
   (use-package all-the-icons-ivy-rich :straight t :after counsel
-    :init (all-the-icons-ivy-rich-mode 1))
+    :init (all-the-icons-ivy-rich-mode 1)
+    :config
+    (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))
 
   (use-package treemacs-all-the-icons :straight t
     :after treemacs all-the-icons
@@ -583,9 +585,7 @@ custom functions can be found in there as well.
   (use-package psishell
     :hook
     (after-init . psiprompt-initialize)
-    (eshell-mode . setup-eshell-ivy-completion)
-    :bind
-    (:map eshell-mode-map ("C-c l" . eshell/resh)))
+    (eshell-mode . setup-eshell-ivy-completion))
   (use-package esh-autosuggest :straight t
     :hook
     (eshell-mode . esh-autosuggest-mode))
