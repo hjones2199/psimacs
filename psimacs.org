@@ -250,7 +250,11 @@ doom-vibrant.
 
   (add-hook 'text-mode-hook 'hl-line-mode)
   (add-hook 'prog-mode-hook 'hl-line-mode)
-  (fringe-mode '(2 . 2))
+
+  (setq psimacs-default-fringe '(2 . 2))
+  (setq psimacs-debug-fringe '(4 . 1))
+  (fringe-mode psimacs-default-fringe)
+
 #+end_src
 
 *** Dashboard                                       :dash:startpage:recent:
@@ -597,6 +601,25 @@ custom functions can be found in there as well.
     (eshell-toggle-init-function #'eshell-toggle-init-eshell)
     :bind
     ("<f12>" . eshell-toggle))
+#+end_src
+
+*** Dired
+
+#+begin_src emacs-lisp
+  (use-package dired-hacks-utils :straight t)
+  (use-package dired-rainbow :straight t)
+  (use-package dired-filetype-face :straight t
+    :config (require 'dired-filetype-face))
+
+  (use-package dired-subtree :straight t
+    :bind (:map dired-mode-map
+                ("i" . dired-subtree-insert)
+                (";" . dired-subtree-remove)
+                ("<tab>" . dired-subtree-toggle)
+                ("<backtab>" . dired-subtree-cycle)))
+
+  (use-package dired-git :straight t
+    :hook (dired-mode . dired-git-mode))
 #+end_src
 
 *** Vterm
