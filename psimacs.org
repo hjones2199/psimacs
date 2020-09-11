@@ -288,7 +288,7 @@ much use out of them but I must admit they are snazzy.
 #+begin_src emacs-lisp :tangle no
   (use-package centaur-tabs :straight t
     :config
-      (centaur-tabs-headline-match)
+    (centaur-tabs-headline-match)
     (setq centaur-tabs-set-icons t)
     :bind
     ("C-<tab>" . centaur-tabs-forward)
@@ -622,6 +622,17 @@ custom functions can be found in there as well.
     :hook (dired-mode . dired-git-mode))
 #+end_src
 
+*** Url
+
+Used by Emacs internal web browsers to store cookies, session info, history, etc.
+
+#+begin_src emacs-lisp
+  (use-package url
+    :config
+    (setq url-configuration-directory
+          (expand-file-name (locate-user-emacs-file ".cache/url"))))
+#+end_src
+
 *** Vterm
 
 Emacs must be compiled with module support to use libvterm, so disabled by default.
@@ -703,6 +714,17 @@ outside of the elisp code.
 #+end_src
 
 ** Programming Languages
+*** C/C++
+
+Use four space indentation and Stroustrup formatting for C and C++ buffers.
+
+#+begin_src emacs-lisp
+  (use-package cc-mode
+    :config
+    (setq-default c-basic-offset 4)
+    (setq c-default-style "stroustrup"))
+#+end_src
+
 *** Python                                            :python:py:scripting:
 
 Anaconda mode provides general python running/debugging support on top of
