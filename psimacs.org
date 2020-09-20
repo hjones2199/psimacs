@@ -92,6 +92,12 @@ distro repositories, the others you may have to install yourself.
 #+end_src
 
 ** Behavior
+*** Fullscreen keybind
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "<f11>") 'toggle-frame-fullscreen)
+#+end_src
+
 *** Custom File
 
 When a user manually installs a package with package.el, or customizes
