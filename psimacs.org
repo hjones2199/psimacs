@@ -11,10 +11,11 @@ To clear user customizations made via the emacs customize GUI, click the
 link below.
 [[elisp:(psimacs-remove-user-cust)][DELETE CUSTOMIZATIONS]]
 
+:Psimacs-reconfig:
+
 #+begin_src emacs-lisp
   (require 'bind-key)
 #+end_src
-:Psimacs-reconfig:
 
 #+name: psimacs-regen-conf
 #+begin_src emacs-lisp
@@ -235,7 +236,7 @@ Modeline from Doom, has some problems in tty with all-the-icons.
   (use-package doom-modeline :straight t
     :hook (after-init . doom-modeline-mode)
     :config
-    (setq doom-modeline-height 22)
+    (setq doom-modeline-height 35)
     (setq find-file-visit-truename t)
     (setq doom-modeline-unicode-fallback t))
 #+end_src
