@@ -312,10 +312,12 @@ Treemacs is a project/file explorer sidebar similar to many IDEs. The
 two other packages provide integration with magit and projectile.
 
 #+begin_src emacs-lisp
-  (use-package treemacs :straight t
-    :defer t
-    :config (treemacs-git-mode 'deferred)
-    (progn (setq treemacs-width 30)))
+  (use-package treemacs :straight t :defer t
+    :config
+    (treemacs-git-mode 'deferred)
+    (setq treemacs-width 30)
+    :bind
+    ("C-c t" . treemacs))
   (use-package treemacs-magit :straight t
     :after treemacs magit)
   (use-package treemacs-projectile :straight t
@@ -855,6 +857,7 @@ Provides a mode for editing Nix configuration files.
 
 #+begin_src emacs-lisp
   (use-package nix-mode :straight t)
+  (use-package nix-buffer :straight t)
 #+end_src
 
 *** Yaml
@@ -969,3 +972,4 @@ Meson and Ninja are modern analogues to Autotools & Make respectively.
   (use-package meson-mode :straight t)
   (use-package ninja-mode :straight t)
 #+end_src
+
