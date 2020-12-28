@@ -599,9 +599,8 @@ custom functions can be found in there as well.
     :hook
     (after-init . psiprompt-initialize)
     (eshell-mode . setup-eshell-ivy-completion))
-  (use-package esh-autosuggest :straight t
-    :hook
-    (eshell-mode . esh-autosuggest-mode))
+  (use-package aweshell :straight
+    (:host github :repo "manateelazycat/aweshell"))
   (use-package eshell-toggle :straight t :defer t
     :custom
     (eshell-toggle-size-fraction 3)
@@ -744,7 +743,10 @@ to work with.
 
 #+begin_src emacs-lisp
   (use-package anaconda-mode :straight t
-    :hook python-mode)
+    :hook python-mode
+    (setq anaconda-mode-installation-directory
+          (expand-file-name
+           (locate-user-emacs-file ".cache/anaconda-mode"))))
   (use-package pyvenv :straight t)
 #+end_src
 
@@ -857,7 +859,18 @@ Provides a mode for editing Nix configuration files.
 
 #+begin_src emacs-lisp
   (use-package nix-mode :straight t)
-  (use-package nix-buffer :straight t)
+  (use-package nix-buffer :straight t
+    :config
+    (nix-buffer-update-directory-name
+     (expand-file-name
+      (locate-user-emacs-file ".cache/nix-buffer"))))
+#+end_src
+
+** Config Languages
+*** Systemd
+
+#+begin_src emacs-lisp
+  (use-package systemd :straight t)
 #+end_src
 
 *** Yaml
