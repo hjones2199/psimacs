@@ -40,16 +40,11 @@
           (find-file-noselect arg2)
         (find-file-other-window arg1)))))
 
-(defun eshell/resh ()
-  "Replace buffer with a fresh eshell buffer"
-  (kill-buffer "*eshell*")
-  (switch-to-buffer "*eshell*")
-  (eshell-mode)
-  (eshell/clear 1))
 
 (defun eshell/rip (reg &rest files)
   (rg reg "all" (car files))
   (other-window 1))
+
 
 (defun setup-eshell-ivy-completion ()
   (define-key eshell-mode-map [remap eshell-pcomplete] 'completion-at-point)
@@ -59,8 +54,5 @@
               (remq (assoc 'ivy-completion-in-region ivy-display-functions-alist)
                     ivy-display-functions-alist)))
 
-;;(define-minor-mode psishell-mode
-;;  "Activates psishell"
-;;  (psiprompt-initialize))
 
 (provide 'psishell)

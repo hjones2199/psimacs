@@ -199,10 +199,6 @@ with appropriate icons, for example a branching logo for vcs status.
   (use-package all-the-icons-dired :straight t
     :hook (dired-mode . all-the-icons-dired-mode))
 
-  ;; (use-package all-the-icons-ivy :straight t
-  ;;   :config
-  ;;   (all-the-icons-ivy-setup))
-
   (use-package all-the-icons-ivy-rich :straight t :after counsel
     :init (all-the-icons-ivy-rich-mode 1)
     :config
@@ -719,6 +715,10 @@ outside of the elisp code.
      (octave . t)
      (matlab . t)
      (lisp . t)))
+
+  (use-package ob-http :straight t
+    :config
+    (append '((http . t)) org-babel-load-languages))
 #+end_src
 
 ** Programming Languages
@@ -914,7 +914,8 @@ the completion list.
 #+begin_src emacs-lisp
   (use-package company :straight t :diminish
     :config
-    (global-company-mode t))
+    (global-company-mode t)
+    (setq company-tooltip-maximum-width 100))
   (use-package company-box :straight t
     :after company
     :diminish
@@ -944,8 +945,6 @@ later as well.
     :hook (lsp-mode . lsp-ui-mode)
     :config (setq lsp-ui-peek-always-show t)
     :bind ("M-+" . lsp-ui-peek-find-definitions))
-  ;; (use-package company-lsp :straight t
-  ;;   :commands company-lsp)
   (use-package origami :straight t
     :config (global-origami-mode)
     :bind ("C-c f" . origami-forward-toggle-node))
