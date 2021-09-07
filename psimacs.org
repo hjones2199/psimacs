@@ -365,7 +365,10 @@ Colorizes matching parentheses for easier parsing by humans.
     (racket-repl-mode . rainbow-delimiters-mode)
     (scheme-mode . rainbow-delimiters-mode)
     (lisp-mode . rainbow-delimiters-mode)
-    (sly-mode . rainbow-delimiters-mode))
+    (sly-mode . rainbow-delimiters-mode)
+    (clojure-mode . rainbow-delimiters-mode)
+    (clojurescript-mode . rainbow-delimiters-mode)
+    (cider-repl-mode . rainbow-delimiters-mode))
 #+end_src
 
 *** Popup frames
@@ -744,6 +747,7 @@ to work with.
 #+begin_src emacs-lisp
   (use-package anaconda-mode :straight t
     :hook python-mode
+    :config
     (setq anaconda-mode-installation-directory
           (expand-file-name
            (locate-user-emacs-file ".cache/anaconda-mode"))))
@@ -785,8 +789,15 @@ your common lisp implementation installed.
 #+begin_src emacs-lisp :tangle no
   (use-package slime :straight t :defer
     :config
-    (setq inferior-lisp-program "sbcl")
-    (add-to-list 'slime-contribs 'slime-fancy))
+    ; (setq inferior-lisp-program "sbcl")
+    (add-to-list 'slime-contribs 'slime-fancy)
+    (defun gerbil-scheme-start-swank (file encoding)
+      (format "%S\n\n" `(begin (import (ecraven gerbil-swank)) (start-swank ,file))))
+    (setq slime-lisp-implementations
+          (cons '(gerbil-scheme ("gxi" "-:d-" "--lang" "r7rs")
+                                :init gerbil-scheme-start-swank
+                                :env "GERBIL_LOADPATH=/home/hdjones/src/r7rs-swank/")
+              slime-lisp-implementations)))
   (use-package slime-company :straight t :after slime company)
 #+end_src
 
@@ -803,9 +814,7 @@ Scheme support, specifically geared towards racket. A SLIME-like interface to ra
 is provided by racket-mode. A possible implementation independent solution would be geiser.
 
 #+begin_src emacs-lisp
-  (use-package geiser :straight t
-    :config
-    (setq geiser-active-implementations '(gerbil gambit guile chicken)))
+  (use-package geiser-guile :straight t)
   (use-package racket-mode :straight t
     :config
     (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
@@ -819,6 +828,20 @@ is provided by racket-mode. A possible implementation independent solution would
     (:host github :repo "DEADB17/ob-racket")
     :config
     (append '((racket . t) (scribble . t)) org-babel-load-languages))
+  (use-package paredit :straight t)
+#+end_src
+
+*** Clojure
+
+Clojure support provided by CIDER and LSP.
+
+#+begin_src emacs-lisp
+  (use-package clojure-mode :straight t
+    :hook
+    (clojure-mode . lsp)
+    (clojurescript-mode . lsp)
+    (clojurec-mode . lsp))
+  (use-package cider :straight t)
 #+end_src
 
 *** Matlab                                            :matlab:math:algebra:
@@ -866,6 +889,17 @@ Provides a mode for editing Nix configuration files.
       (locate-user-emacs-file ".cache/nix-buffer"))))
 #+end_src
 
+*** Ethereum
+
+Languages for interacting with the Ethereum Virtual Machine
+
+#+begin_src emacs-lisp
+  (use-package solidity-mode :straight t)
+  (use-package company-solidity :straight t)
+  (use-package solidity-flycheck :straight t)
+  (use-package vyper-mode :straight t)
+#+end_src
+
 ** Config Languages
 *** Systemd
 
@@ -893,6 +927,13 @@ Support for Podman/Docker container tech, including relevant file types.
 #+end_src
 
 ** Misc Development
+*** Direnv
+
+#+begin_src emacs-lisp
+  (use-package direnv :straight t
+    :config (direnv-mode))
+#+end_src
+
 *** Code Completion                              :lsp:company:intellisense:
 
 Yasnippet provides auto-complete code snippets that can be made/enabled
@@ -938,6 +979,7 @@ later as well.
     :commands lsp
     :config
     (setq lsp-prefer-flymake nil)
+    (setq lsp-lens-enable t)
     (setq lsp-clients-clangd-executable "clangd")
     (setq lsp-session-file (expand-file-name
                             (locate-user-emacs-file ".cache/lsp-session"))))
@@ -983,5 +1025,9 @@ Meson and Ninja are modern analogues to Autotools & Make respectively.
 #+begin_src emacs-lisp
   (use-package meson-mode :straight t)
   (use-package ninja-mode :straight t)
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package cmake-mode :straight t)
 #+end_src
 
