@@ -835,7 +835,7 @@ is provided by racket-mode. A possible implementation independent solution would
 
 Clojure support provided by CIDER and LSP.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package clojure-mode :straight t
     :hook
     (clojure-mode . lsp)
