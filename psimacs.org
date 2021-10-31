@@ -580,7 +580,8 @@ same system, as a single logical system.
     :config  (setq tramp-default-method "ssh")
     (setq tramp-persistency-file-name
           (expand-file-name
-           (locate-user-emacs-file ".cache/tramp"))))
+           (locate-user-emacs-file ".cache/tramp")))
+    (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 #+end_src
 
 *** Eshell
