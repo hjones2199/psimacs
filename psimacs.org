@@ -685,6 +685,12 @@ control which means LSP & dap are also aware of version control.
            (locate-user-emacs-file ".cache/projectile-bookmarks.eld"))))
 #+end_src
 
+*** Project.el
+
+#+begin_src emacs-lisp
+  (use-package project :ensure t)
+#+end_src
+
 ** Org Mode
 
 Custom theme elements for org mode. Attribute setting lines can be disabled
