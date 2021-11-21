@@ -688,7 +688,7 @@ control which means LSP & dap are also aware of version control.
 *** Project.el
 
 #+begin_src emacs-lisp
-  (use-package project :ensure t)
+  (use-package project :straight t)
 #+end_src
 
 ** Org Mode
