@@ -922,6 +922,12 @@ Provides a mode for yaml files
   (use-package yaml-mode :straight t)
 #+end_src
 
+*** Protobuf
+
+#+begin_src emacs-lisp
+  (use-package protobuf-mode :straight t)
+#+end_src
+
 ** Devops
 *** Containers
 
